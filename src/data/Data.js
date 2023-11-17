@@ -19,6 +19,9 @@ export const nav = [
     text: "Contact",
     path: "/contact",
   },
+  {
+    path: "/login"
+  }
 ];
 export const news = [
   {
