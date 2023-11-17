@@ -13,3 +13,6 @@ Currently, two official plugins are available:
 2. cd Dorm_Application
 3. pnpm i
 4. pnpm run dev
+
+## Web Application
+![Alt text](image.png)
