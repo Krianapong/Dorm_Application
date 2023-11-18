@@ -1,6 +1,6 @@
 import React ,{ useState } from "react";
 import "./form.css";
-import { auth } from "../firebase";
+import { auth, firestore } from "../firebase";
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,48 +8,70 @@ const Form = () => {
   const [isRegisterActive, setRegisterActive] = useState(false);
   const navigate = useNavigate();
 
+  const addUserDataToFirestore = async (userId, name, phone, email) => {
+    try {
+      const userCollection = firestore.collection("profiles");
+
+      await userCollection.doc(userId).set({
+        name,
+        phone,
+        email,
+      });
+
+      console.log("User data added to Firestore successfully!");
+    } catch (error) {
+      console.error("Error adding user data to Firestore:", error);
+    }
+  };
+
   const handleRegisterClicks= () =>{
     setRegisterActive(true);
   };
+
   const handleRegisterClick = async (e) => {
     e.preventDefault();
-  
+
     try {
       const name = document.getElementById("name").value;
       const phone = document.getElementById("phone").value;
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
+
       // Basic form validation
       if (!name || !phone || !email || !password || !confirmPassword) {
         throw new Error("All fields are required");
       }
-  
+
       // Validate email format
-      if (!isValidEmail(email)) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
         throw new Error("Invalid email format");
       }
-  
+
       // Check if passwords match
       if (password !== confirmPassword) {
         throw new Error("Passwords do not match");
       }
-  
+
       // Create a new user with email and password
-      await auth.createUserWithEmailAndPassword(email, password);
-  
+      const { user } = await auth.createUserWithEmailAndPassword(email, password);
+
       // Update user profile (optional)
       await auth.currentUser.updateProfile({
         displayName: name,
       });
-  
+
+      // Add user data to Firestore
+      await addUserDataToFirestore(user.uid, name, phone, email);
+
       // Display SweetAlert success message
       Swal.fire({
         icon: 'success',
         title: 'Registration Successful!',
         text: 'Thank you for registering. You can now log in.',
       });
-  
+
       console.log("Registration successful!");
     } catch (error) {
       // Display SweetAlert error message
@@ -58,7 +80,7 @@ const Form = () => {
         title: 'Registration Error',
         text: error.message,
       });
-  
+
       console.error("Registration error:", error.message);
     }
   };

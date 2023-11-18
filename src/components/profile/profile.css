@@ -1,0 +1,74 @@
+/* profile.css */
+
+/* Container styles */
+.div {
+    max-width: 30px;
+    margin: auto auto auto auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  /* Header styles */
+  h2 {
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Loading indicator styles */
+  p.loading {
+    color: #999;
+    text-align: center;
+  }
+  
+  /* Form styles */
+  label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  input,
+  button {
+    margin-top: 5px;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+  }
+  
+  /* Avatar styles */
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: 8px;
+  }
+  
+  /* Edit mode styles */
+  button.edit-button,
+  button.cancel-button,
+  button.save-button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  
+  button.cancel-button,
+  button.save-button {
+    background-color: #f44336;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .div {
+      padding: 10px;
+    }
+  }
+  
