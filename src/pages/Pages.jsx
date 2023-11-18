@@ -19,6 +19,7 @@ const Pages = () => {
           <Route path="/news" element={<NewsPage />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<Form />} />
+          <Route path="/signup" element={<Form />} />
           {/* <Route path="/signup" element={<Form />} /> */}
         </Routes>
       </Router>

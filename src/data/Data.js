@@ -8,10 +8,6 @@ export const nav = [
     path: "/about",
   },
   {
-    text: "Service",
-    path: "/services",
-  },
-  {
     text: "News",
     path: "/news",
   },
@@ -19,9 +15,6 @@ export const nav = [
     text: "Contact",
     path: "/contact",
   },
-  {
-    path: "/login"
-  }
 ];
 export const news = [
   {
