@@ -14,5 +14,10 @@ Currently, two official plugins are available:
 3. pnpm i
 4. pnpm run dev
 
+### Admin & User
+- Admin
+ admin@gmail.com
+ 123456
+
 ## Web Application
 ![Alt text](image.png)

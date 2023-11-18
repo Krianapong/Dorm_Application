@@ -1,20 +1,16 @@
 export const nav = [
   {
     text: "Home",
-    path: "/home",
+    path: "/home/",
   },
   {
     text: "About",
-    path: "/about",
+    path: "/about/",
   },
   {
     text: "News",
-    path: "/news",
-  },
-  {
-    text: "Contact",
-    path: "/contact",
-  },
+    path: "/news/",
+  }
 ];
 export const news = [
   {

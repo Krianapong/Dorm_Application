@@ -1,11 +1,12 @@
-// App.js
-import React, { useState } from "react";
+import React ,{ useState } from "react";
 import "./form.css";
 import { auth } from "../firebase";
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const Form = () => {
   const [isRegisterActive, setRegisterActive] = useState(false);
+  const navigate = useNavigate();
 
   const handleRegisterClicks= () =>{
     setRegisterActive(true);
@@ -19,7 +20,6 @@ const Form = () => {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-  
       // Basic form validation
       if (!name || !phone || !email || !password || !confirmPassword) {
         throw new Error("All fields are required");
@@ -91,6 +91,7 @@ const Form = () => {
       } else {
         console.log("User login successful!");
         // Perform actions specific to regular user login
+        navigate("/home");
       }
     } catch (error) {
       console.error("Login error:", error.message);

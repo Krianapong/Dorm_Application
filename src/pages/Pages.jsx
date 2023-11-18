@@ -14,13 +14,12 @@ const Pages = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/news" element={<NewsPage />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/signin" element={<Form />} />
-          <Route path="/signup" element={<Form />} />
-          {/* <Route path="/signup" element={<Form />} /> */}
+          <Route path="/home/" element={<Home />} />
+          <Route path="/about/" element={<About />} />
+          <Route path="/news/" element={<NewsPage />} />
+          <Route path="/contact/" element={<Contact />} />
+          <Route path="/signin/" element={<Form />} />
+          <Route path="/signup/" element={<Form />} />
         </Routes>
       </Router>
     </>
