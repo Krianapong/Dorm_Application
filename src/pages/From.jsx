@@ -107,9 +107,10 @@ const Form = () => {
       const user = auth.currentUser;
 
       // Check if the user is an admin based on their UID
-      if (user && user.uid === "C7rnc048XDgYgrqRB6aY1q9ZqLM2") {
+      if (user && user.uid === "GebDyCR4ciTtQVf7Qj5ougzDSNx2") {
         console.log("Admin login successful!");
         // Perform actions specific to admin login
+        navigate("/admin/home/");
       } else {
         console.log("User login successful!");
         // Perform actions specific to regular user login
