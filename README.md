@@ -34,3 +34,5 @@ pnpm มีเป้าหมายที่ชัดเจน - ประหย
 
 ## Performance comparison
 ![Alt text](image-1.png)
+
+อ้างอิง [https://www.pixelmatters.com/blog/yarn-npm-or-pnpm](https://www.pixelmatters.com/blog/yarn-npm-or-pnpm)
