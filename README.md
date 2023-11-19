@@ -93,3 +93,5 @@ Firebase เป็นผลิตภัณฑ์ของ Google ที่ช่
     ให้การเชื่อมต่อระหว่างเซิร์ฟเวอร์และผู้ใช้ปลายทางของแอปพลิเคชัน ซึ่งสามารถใช้เพื่อรับและส่งข้อความและการแจ้งเตือนได้ การเชื่อมต่อเหล่านี้เชื่อถือได้และประหยัดแบตเตอรี่
 
     ![Alt text](image-7.png)
+
+    อ้างอิง [https://www.geeksforgeeks.org/firebase-introduction/](https://www.geeksforgeeks.org/firebase-introduction/)
