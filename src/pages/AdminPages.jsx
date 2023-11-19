@@ -1,25 +1,14 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "../components/home/HomePage";
-import About from "../components/about/About";
-import Contact from "../components/contact/Contact";
-import NewsPage from "../components/news/Newpage";
-import Form from "./From";
-import Profile from "../components/profile/Profile";
+import Dashboard from "./admin/Dashboard";
 
 const AdminPages = () => {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/admin/home/" element={<Home />} />
-          <Route path="/about/" element={<About />} />
-          <Route path="/news/" element={<NewsPage />} />
-          <Route path="/contact/" element={<Contact />} />
-          <Route path="/signin/" element={<Form />} />
-          <Route path="/signup/" element={<Form />} />
-          <Route path="/profile/" element={<Profile />} />
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/admin/home/" element={<Dashboard />} />
         </Routes>
       </Router>
     </>

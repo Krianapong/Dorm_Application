@@ -16,7 +16,7 @@ Currently, two official plugins are available:
 
 ### Admin & User
 - Admin
- admin@gmail.com
+ ado@g.com
  123456
 
 ## Web Application
