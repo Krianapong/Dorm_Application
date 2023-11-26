@@ -180,9 +180,6 @@ const Repairt = () => {
     <>
       <div className="container-blog">
         <h1>บริการซ่อมบำรุง</h1>
-        <button className="top-right-button" onClick={handleOpenModal}>
-          ชำระเงิน
-        </button>
         <div className="sections-container">
           <section className="section1">
             <div className="security-header">
@@ -251,6 +248,10 @@ const Repairt = () => {
               </div>
               <ServiceDetails selectedServices={selectedServices} />
               <text className="total-price">ยอดรวม: {totalAmount} บาท</text>
+              <br />
+              <button className="top-left-button" onClick={handleOpenModal}>
+          ชำระเงิน
+        </button>
             </section>
             <section className="section3">
               <div className="security-head">

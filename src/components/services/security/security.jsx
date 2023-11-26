@@ -237,21 +237,23 @@ const Service = () => {
             </div>
             <ServiceDetails selectedServices={selectedServices} />
             <p className="total-price">ยอดรวม: {totalAmount} บาท</p>
+            <button className="payment-button" onClick={handleOpenModal}>
+          ชำระเงิน
+        </button>
           </section>
           <section className="section3">
             <div className="security-head">
               <h2>รายเอียดการบริการ</h2>
             </div>
-            <p className="left-align">เวลาให้บริการ : 08.00 - 20.00 น.</p>
-            <p className="left-align">
-              **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ
-              **
+            <p className="left-align service-hours">
+              เวลาให้บริการ : 08.00 - 20.00 น.
+            </p>
+            <p className="left-align non-service-days">
+              **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ **
             </p>
           </section>
         </div>
-        <button className="top-right-button" onClick={handleOpenModal}>
-          ชำระเงิน
-        </button>
+        
       </div>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
