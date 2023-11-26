@@ -1,9 +1,10 @@
-import React from "react";
-import Hero from "./hero/hero";
-import Featured from "./featured/Featured";
-import Recent from "./recent/Recent";
-import News from "../news/News";
-import Contact from "../contact/Contact";
+import React from "react"
+import Awards from "./awards/Awards"
+import Featured from "./featured/Featured"
+import Hero from "./hero/Hero"
+import Recent from "./recent/Recent"
+import Team from "./team/Team"
+import News from "../blog/BlogCard"
 
 const Home = () => {
   return (
@@ -11,9 +12,11 @@ const Home = () => {
       <Hero />
       <Featured />
       <Recent />
+      <Awards />
       <News />
-      <Contact />
+      <Team />
     </>
-  );
-};
-export default Home;
+  )
+}
+
+export default Home

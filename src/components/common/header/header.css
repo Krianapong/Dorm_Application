@@ -16,12 +16,12 @@ header a {
   font-weight: 500;
 }
 header a:hover {
-  color: #ff6922;
+  color: #27ae60;
 }
 header span {
   width: auto;
   padding: 0px 6px;
-  background: #ff6922;
+  background: #27ae60;
   border-radius: 50px;
   color: #ffffff;
   margin-right: 4px;
@@ -33,30 +33,6 @@ header h4 {
 }
 header .toggle {
   display: none;
-}
-
-.btn1{
-  border-radius: 5px;
-  padding: 17px 30px;
-  background: #ff6922;
-  border: none;
-  color: #fff;
-  cursor: pointer;
-  font-weight: bold;
-}
-.btn1_1{
-  width: 20%;
-}
-.btn1 i {
-  margin-right: 5px;
-}
-
-.btn1:hover {
-  border: 1px solid ;
-  border-radius: 12px;
-  border-color: #000;
-  background: rgb(255, 90, 19);
-  color: #000;
 }
 
 @media screen and (max-width: 768px) {
@@ -81,7 +57,7 @@ header .toggle {
     top: 10vh;
     left: 0;
     width: 100%;
-    background-color: #ff6922;
+    background-color: #27ae60;
     padding: 20px;
   }
   header li a {

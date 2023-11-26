@@ -1,4 +1,3 @@
-
 #Themepage {
   background-color: #c9d6ff;
   background: linear-gradient(to right, #f19c9c, rgb(236, 201, 149));
@@ -9,7 +8,7 @@
   height: 100vh;
 }
 
-.containers {
+.containers-from {
   background-color: #fff;
   border-radius: 30px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
@@ -20,25 +19,25 @@
   min-height: 550px;
 }
 
- .containers p {
+.containers-from p {
   font-size: 14px;
   line-height: 20px;
   letter-spacing: 0.3px;
   margin: 20px 0;
 }
 
-.containers span {
+.containers-from span {
   font-size: 12px;
 }
 
-.containers a {
+.containers-from a {
   color: #333;
   font-size: 13px;
   text-decoration: none;
   margin: 15px 0 10px;
 }
 
-.containers button {
+.containers-from button {
   background-color: #ff6922;
   color: #fff;
   font-size: 12px;
@@ -52,12 +51,12 @@
   cursor: pointer;
 }
 
-.containers button.hidden {
+.containers-from button.hidden-from {
   background-color: transparent;
   border-color: #fff;
 }
 
-.containers form {
+.containers-from form {
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -67,7 +66,7 @@
   height: 100%;
 }
 
-.containers input {
+.containers-from input {
   background-color: #eee;
   border: none;
   margin: 8px 0;
@@ -78,31 +77,31 @@
   outline: none;
 }
 
-.form-container {
+.form-container-from {
   position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
 }
 
-.sign-in {
+.sign-in-from {
   left: 0;
   width: 50%;
   z-index: 2;
 }
 
-.containers.active .sign-in {
+.containers-from.active-from .sign-in-from {
   transform: translateX(100%);
 }
 
-.sign-up {
+.sign-up-from {
   left: 0;
   width: 50%;
   opacity: 0;
   z-index: 1;
 }
 
-.containers.active .sign-up {
+.containers-from.active-from .sign-up-from {
   transform: translateX(100%);
   opacity: 1;
   z-index: 5;
@@ -110,23 +109,21 @@
 }
 
 @keyframes move {
-  0%,
-  49.99% {
+  0%, 49.99% {
     opacity: 0;
     z-index: 1;
   }
-  50%,
-  100% {
+  50%, 100% {
     opacity: 1;
     z-index: 5;
   }
 }
 
-.social-icons {
+.social-icons-from {
   margin: 20px 0;
 }
 
-.social-icons a {
+.social-icons-from a {
   border: 1px solid #ccc;
   border-radius: 20%;
   display: inline-flex;
@@ -137,7 +134,7 @@
   height: 40px;
 }
 
-.toggle-container {
+.toggle-container-from {
   position: absolute;
   top: 0;
   left: 50%;
@@ -149,12 +146,12 @@
   z-index: 1000;
 }
 
-.containers.active .toggle-container {
+.containers-from.active-from .toggle-container-from {
   transform: translateX(-100%);
   border-radius: 0 150px 100px 0;
 }
 
-.toggle {
+.toggle-from {
   background-color: #ff6922;
   height: 100%;
   background: linear-gradient(to right, #ff6922, #f1966b);
@@ -167,11 +164,11 @@
   transition: all 0.6s ease-in-out;
 }
 
-.containers.active .toggle {
+.containers-from.active-from .toggle-from {
   transform: translateX(50%);
 }
 
-.toggle-panel {
+.toggle-panel-from {
   position: absolute;
   width: 50%;
   height: 100%;
@@ -186,19 +183,19 @@
   transition: all 0.6s ease-in-out;
 }
 
-.toggle-left {
+.toggle-left-from {
   transform: translateX(-200%);
 }
 
-.containers.active .toggle-left {
+.containers-from.active-from .toggle-left-from {
   transform: translateX(0);
 }
 
-.toggle-right {
+.toggle-right-from {
   right: 0;
   transform: translateX(0);
 }
 
-.containers.active .toggle-right {
+.containers-from.active-from .toggle-right-from {
   transform: translateX(200%);
-} 
+}

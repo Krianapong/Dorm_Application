@@ -1,61 +1,61 @@
 export const nav = [
   {
     text: "Home",
-    path: "/home/",
+    path: "/home",
   },
   {
     text: "About",
-    path: "/about/",
+    path: "/about",
   },
   {
     text: "News",
-    path: "/news/",
+    path: "/news",
   }
 ];
-export const news = [
+export const blog = [
   {
     id: 1,
+    title: "Breaking News: Real Estate Boom in Canada",
     cover: "../images/list/p-1.png",
-    name: "Red Carpet Real Estate",
-    text: "210 Zirak Road, Canada",
+    description: "Discover the latest trends in real estate at 210 Zirak Road, Canada.",
     time: "02.00",
   },
   {
     id: 2,
+    title: "Investment Opportunities in Red Carpet Real Estate",
     cover: "../images/list/p-2.png",
-    name: "Red Carpet Real Estate",
-    text: "210 Zirak Road, Canada",
+    description: "Explore investment opportunities at 210 Zirak Road, Canada.",
     time: "02.00",
   },
   {
     id: 3,
+    title: "Luxury Living: Red Carpet Real Estate Unveils New Properties",
     cover: "../images/list/p-7.png",
-    name: "Red Carpet Real Estate",
-    text: "210 Zirak Road, Canada",
+    description: "Experience luxury living at 210 Zirak Road, Canada.",
     time: "02.00",
   },
   {
     id: 4,
+    title: "Exclusive Preview: Red Carpet Real Estate Open House",
     cover: "../images/list/p-4.png",
-    name: "Red Carpet Real Estate",
-    text: "210 Zirak Road, Canada",
+    description: "Get an exclusive preview of properties at 210 Zirak Road, Canada.",
     time: "02.00",
   },
   {
     id: 5,
+    title: "Community Spotlight: 210 Zirak Road, Canada",
     cover: "../images/list/p-5.png",
-    name: "Red Carpet Real Estate",
-    text: "210 Zirak Road, Canada",
+    description: "Learn about the community at 210 Zirak Road, Canada.",
     time: "02.00",
   },
   {
     id: 6,
+    title: "Real Estate Trends: Red Carpet Real Estate Insights",
     cover: "../images/list/p-6.png",
-    name: "Red Carpet Real Estate",
-    text: "210 Zirak Road, Canada",
+    description: "Stay updated on the latest real estate trends at 210 Zirak Road, Canada.",
     time: "02.00",
   },
-];
+]
 export const featured = [
   {
     cover: "../images/hero/h1.png",
@@ -139,3 +139,90 @@ export const list = [
     type: "Apartment",
   },
 ];
+export const awards = [
+  {
+    icon: " ",
+    num: "32 M",
+    name: "Blue Burmin Award",
+  },
+  {
+    icon: " ",
+    num: "43 M",
+    name: "Mimo X11 Award",
+  },
+  {
+    icon: " ",
+    num: "51 M",
+    name: "Australian UGC Award",
+  },
+  {
+    icon: " ",
+    num: "42 M",
+    name: "IITCA Green Award",
+  },
+];
+export const location = [
+  {
+    id: 1,
+    name: "New Orleans, Louisiana",
+    Villas: "12 Villas",
+    Apartments: "10 Apartments",
+    Offices: "07 Offices",
+    cover: "./images/location/city-1.png",
+  },
+  {
+    id: 2,
+    name: "Jerrsy, United State",
+    Villas: "12 Villas",
+    Apartments: "10 Apartments",
+    Offices: "07 Offices",
+    cover: "./images/location/city-2.png",
+  },
+  {
+    id: 3,
+    name: "Liverpool, London",
+    Villas: "12 Villas",
+    Apartments: " 10 Apartments",
+    Offices: "07 Offices",
+    cover: "./images/location/city-3.png",
+  },
+  {
+    id: 4,
+    name: "NewYork, United States",
+    Villas: "12 Villas",
+    Apartments: " 10 Apartments",
+    Offices: "07 Offices",
+    cover: "./images/location/city-4.png",
+  },
+  {
+    id: 5,
+    name: "Montreal, Canada",
+    Villas: "12 Villas",
+    Apartments: " 10 Apartments",
+    Offices: "07 Offices",
+    cover: "./images/location/city-5.png",
+  },
+  {
+    id: 6,
+    name: "California, USA",
+    Villas: "12 Villas",
+    Apartments: " 10 Apartments",
+    Offices: "07 Offices",
+    cover: "./images/location/city-6.png",
+  },
+];
+export const footer = [
+  {
+    title: "LAYOUTS",
+    text: [{ list: "Home Page" }, { list: "About Page" }, { list: "Service Page" }, { list: "Property Page" }, { list: "Contact Page" }, { list: "Single Blog" }],
+  },
+  {
+    title: "ALL SECTIONS",
+    text: [{ list: "Headers" }, { list: "Features" }, { list: "Attractive" }, { list: "Testimonials" }, { list: "Videos" }, { list: "Footers" }],
+  },
+  {
+    title: "COMPANY",
+    text: [{ list: "About" }, { list: "Blog" }, { list: "Pricing" }, { list: "Affiliate" }, { list: "Login" }, { list: "Changelog" }],
+  },
+]
+

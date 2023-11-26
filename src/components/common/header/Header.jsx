@@ -1,40 +1,46 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { list, nav } from "../../../data/Data";
 import "./header.css";
+import { nav } from "../../../data/Data";
+import { Link } from "react-router-dom";
 import { auth } from "../../../firebase";
+import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Button from "@mui/material/Button";
-import Avatar from "@mui/material/Avatar";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ChatIcon from "@mui/icons-material/Chat";
+import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import Avatar from "@mui/material/Avatar";
 import imgProfile from "../../../images/profiles.jpg";
-import Logo from "../../../images/Logo.png";
-import { useNavigate } from "react-router-dom";
 
 const Header = () => {
   const [navList, setNavList] = useState(false);
   const [user, setUser] = useState(null);
-  const [anchorEl, setAnchorEl] = useState(null); // Add this line
-  const [userAvatar, setUserAvatar] = useState(null);
-  const navigate = useNavigate(); // Add this line
+  const [userAvatar, setUserAvatar] = useState(null); // State for user's avatar
+  const [userName, setUserName] = useState(""); // State for user's name
+  const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
 
       if (user) {
-        // ดึงข้อมูลจาก Firestore
+        // User is logged in
+        console.log("User is logged in");
         const userId = user.uid;
         const userRef = firestore.collection("profiles").doc(userId);
 
         userRef.onSnapshot((doc) => {
           if (doc.exists) {
-            // ดึงข้อมูล URL ของ Avatar
             const avatarURL = doc.data().avatar;
             setUserAvatar(avatarURL);
+            setUserName(doc.data().name);
           }
         });
+      } else {
+        // User is not logged in
+        console.log("User is not logged in");
       }
     });
 
@@ -42,6 +48,7 @@ const Header = () => {
       unsubscribe();
     };
   }, []);
+
 
   const handleSignOut = () => {
     auth.signOut();
@@ -67,7 +74,7 @@ const Header = () => {
       <header>
         <div className="container flex">
           <div className="logo">
-            <img src={Logo} alt="" />
+            <img src="./images/logo-light.png" alt="" />
           </div>
           <div className="nav">
             <ul className={navList ? "small" : "flex"}>
@@ -76,14 +83,13 @@ const Header = () => {
                   <Link to={list.path}>{list.text}</Link>
                 </li>
               ))}
-
               {user && (
                 <>
                   <li>
-                    <Link to="/book-room">Book a Room</Link>
+                    <Link to="/room">Book a Room</Link>
                   </li>
                   <li>
-                    <Link to="/service">Service</Link>
+                    <Link to="/services">Service</Link>
                   </li>
                   <li>
                     <Link to="/cost-of-utilities">Cost of Utilities</Link>
@@ -95,7 +101,6 @@ const Header = () => {
               </li>
             </ul>
           </div>
-
           {user ? (
             // If user is authenticated, show a logout button
             <div className="button flex">
@@ -105,8 +110,9 @@ const Header = () => {
                 aria-haspopup="true"
                 onClick={handleDropdownClick}
                 alt="Profile"
-                src={imgProfile}
+                src={userAvatar || imgProfile}
               />
+              <span>{userName}</span>
 
               <Menu
                 id="simple-menu"
@@ -114,32 +120,45 @@ const Header = () => {
                 keepMounted
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                style={{ zIndex: 9999999 }}
               >
-                <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>Chat</MenuItem>
-                <MenuItem onClick={handleSignOut}>Sign Out</MenuItem>
+                <MenuItem onClick={handleProfileClick}>
+                  <ListItemIcon>
+                    <AccountCircleIcon />
+                  </ListItemIcon>
+                  Profile
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <ListItemIcon>
+                    <ChatIcon />
+                  </ListItemIcon>
+                  Chat
+                </MenuItem>
+                <MenuItem onClick={handleSignOut}>
+                  <ListItemIcon>
+                    <ExitToAppIcon />
+                  </ListItemIcon>
+                  Sign Out
+                </MenuItem>
               </Menu>
             </div>
           ) : (
-            // If user is not authenticated, show a sign-in link
+            // If user is not authenticated, show sign-in and sign-up options
             <div className="button flex">
               <Link to="/signin" className="btn0">
-                Sign In
+                <span><i className="fa fa-sign-in"></i></span>Sign In
               </Link>
-              <Link to="/signup" className="btn1">
-                <i className="fa fa-sign-out"></i> Sign Up
+              <Link to="/signup">
+                <button className="btn6">
+                  <i className="fa fa-user-plus"></i> Sign Up
+                </button>
               </Link>
-              {/* Add SignUp logic or link here if needed */}
             </div>
           )}
 
           <div className="toggle">
             <button onClick={() => setNavList(!navList)}>
-              {navList ? (
-                <i className="fa fa-times"></i>
-              ) : (
-                <i className="fa fa-bars"></i>
-              )}
+              {navList ? <i className="fa fa-times"></i> : <i className="fa fa-bars"></i>}
             </button>
           </div>
         </div>

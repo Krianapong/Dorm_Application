@@ -28,7 +28,7 @@ ul {
 button {
   border-radius: 5px;
   padding: 17px 30px;
-  background: #ff6922;
+  background: #27ae60;
   border: none;
   color: #fff;
   cursor: pointer;
@@ -38,8 +38,8 @@ button i {
   margin-right: 5px;
 }
 .heading {
-  text-align: left;
-  width: 100%;
+  text-align: center;
+  width: 60%;
   margin: auto;
 }
 .heading h1 {
@@ -95,13 +95,7 @@ img {
   height: 100%;
   cursor: pointer;
 }
-.btn0 {
-  margin: 0 20px 0px 0px;
-  background: none;
-  color: #000;
-}
 .btn2 {
-  background: #ff6922;
   border-radius: 50px;
   font-size: 20px;
 }

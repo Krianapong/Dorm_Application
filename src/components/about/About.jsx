@@ -1,9 +1,8 @@
 import React from "react"
-import Back from "../model/Back"
-import Heading from "../model/Heading"
+import Back from "../common/Back"
+import Heading from "../common/Heading"
 import img from "../../images/about.jpg"
 import "./about.css"
-import immio from "../../../public/immio.jpg"
 
 const About = () => {
   return (
@@ -19,7 +18,7 @@ const About = () => {
             <button className='btn2'>More About Us</button>
           </div>
           <div className='right row'>
-            <img src={immio} alt='' />
+            <img src='./immio.jpg' alt='' />
           </div>
         </div>
       </section>

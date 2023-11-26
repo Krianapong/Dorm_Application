@@ -1,5 +1,5 @@
 import React from "react"
-import Heading from "../../model/Heading"
+import Heading from "../../common/Heading"
 import "./Featured.css"
 import FeaturedCard from "./FeaturedCard"
 
@@ -8,7 +8,7 @@ const Featured = () => {
     <>
       <section className='featured background'>
         <div className='container'>
-          <Heading/>
+          <Heading title='Featured Property Types' subtitle='Find All Type of Property.' />
           <FeaturedCard />
         </div>
       </section>

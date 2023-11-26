@@ -1,7 +1,48 @@
-import React from "react"
-import Heading from "../../common/Heading"
-import { team } from "../../data/Data"
-import "./team.css"
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFacebookF, faLinkedin, faTwitter, faInstagram } from "@fortawesome/free-brands-svg-icons";
+import { faEnvelope, faPhoneAlt, faLocationDot, faCircleCheck } from "@fortawesome/free-solid-svg-icons"; // Import FortAwesome icons
+import Heading from "../../common/Heading";
+import "./team.css";
+
+export const team = [
+  {
+    list: "50",
+    cover: "../images/customer/team-1.jpg",
+    address: "Liverpool, Canada",
+    name: "Sargam S. Singh",
+    icon: [
+      <FontAwesomeIcon icon={faFacebookF} />,
+      <FontAwesomeIcon icon={faLinkedin} />,
+      <FontAwesomeIcon icon={faTwitter} />,
+      <FontAwesomeIcon icon={faInstagram} />,
+    ],
+  },
+  {
+    list: "70",
+    cover: "../images/customer/team-2.jpg",
+    address: "Montreal, Canada",
+    name: "Harijeet M. Siller",
+    icon: [
+      <FontAwesomeIcon icon={faFacebookF} />,
+      <FontAwesomeIcon icon={faLinkedin} />,
+      <FontAwesomeIcon icon={faTwitter} />,
+      <FontAwesomeIcon icon={faInstagram} />,
+    ],
+  },
+  {
+    list: "80",
+    cover: "../images/customer/team-3.jpg",
+    address: "Denever, USA",
+    name: "Anna K. Young",
+    icon: [
+      <FontAwesomeIcon icon={faFacebookF} />,
+      <FontAwesomeIcon icon={faLinkedin} />,
+      <FontAwesomeIcon icon={faTwitter} />,
+      <FontAwesomeIcon icon={faInstagram} />,
+    ],
+  },
+]
 
 const Team = () => {
   return (
@@ -17,9 +58,9 @@ const Team = () => {
                 <div className='details'>
                   <div className='img'>
                     <img src={val.cover} alt='' />
-                    <i className='fa-solid fa-circle-check'></i>
+                    <FontAwesomeIcon icon={faCircleCheck} className='fa-circle-check' />
                   </div>
-                  <i className='fa fa-location-dot'></i>
+                  <FontAwesomeIcon icon={faLocationDot} className='fa-location-dot' />
                   <label>{val.address}</label>
                   <h4>{val.name}</h4>
 
@@ -30,11 +71,10 @@ const Team = () => {
                   </ul>
                   <div className='button flex'>
                     <button>
-                      <i className='fa fa-envelope'></i>
-                      Message
+                      <FontAwesomeIcon icon={faEnvelope} /> Message
                     </button>
                     <button className='btn4'>
-                      <i className='fa fa-phone-alt'></i>
+                      <FontAwesomeIcon icon={faPhoneAlt} />
                     </button>
                   </div>
                 </div>
@@ -44,7 +84,7 @@ const Team = () => {
         </div>
       </section>
     </>
-  )
-}
+  );
+};
 
-export default Team
+export default Team;

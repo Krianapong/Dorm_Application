@@ -1,0 +1,113 @@
+.sections-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-top: 1%;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.section1,
+.section2,
+.section3 {
+    margin: 30px;
+    background: #ffffff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.section1 {
+    width: 55vh;
+    height: 64vh;
+}
+
+.section2 {
+    position: relative;
+    width: 90vh;
+    height: 35vh;
+}
+
+.section3 {
+    width: 90vh;
+    height: 25vh;
+}
+
+.security-text {
+    color: #000;
+    font-size: 30px;
+}
+
+.security-header {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.security-head {
+    padding-left: 20px;
+}
+
+.total-price {
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    color: #545454;
+    font-size: 24px;
+}
+
+.left-align {
+    font-size: 24px;
+    color: #545454;
+    text-align: left;
+    margin-left: 10%;
+}
+
+.security-label {
+    font-size: 24px;
+    color: #545454;
+    text-align: left;
+    margin-left: 10%;
+}
+
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+}
+
+.top-right-button {
+    position: absolute;
+    bottom: 1%;
+    right: 15%;
+    background-color: #ff5733;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.container-blog {
+    position: relative;
+}
+
+.security-img {
+    margin-top: 5%;
+}
+
+.security-imageUrl {
+    width: 40vh;
+    border: 1px solid #ccc;
+    height: 26vh; 
+    padding: 10px; 
+    display: block; 
+    margin: 0 auto; 
+}
+.security-input {
+    width: 40vh;
+    border: 1px solid #ccc;
+    padding: 10px; 
+    display: block; 
+    margin: 0 auto; 
+}

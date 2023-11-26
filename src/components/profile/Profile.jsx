@@ -1,7 +1,8 @@
 // Profile.js
 import React, { useState, useEffect } from "react";
 import { auth, firestore, storage } from "../../firebase";
-import "./profile.css"
+import "./profile.css";
+
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ const Profile = () => {
     firstName: "",
     lastName: "",
     phone: "",
-    avatar: "", // เอาออกไปเนื่องจากรูป Avatar จะถูกเก็บใน Storage
+    avatar: "", // Avatar URL is stored in Storage
     avatarFile: null,
   });
 
@@ -95,49 +96,61 @@ const Profile = () => {
   };
 
   return (
-    <div className="dev">
-      <h2>User Profile</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <>
-          {userData ? (
-            <>
-              {editMode ? (
-                <>
-                  <label>First Name:</label>
-                  <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
-
-                  <label>Last Name:</label>
-                  <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
-
-                  <label>Phone:</label>
-                  <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} />
-
+    <div className="profile-container">
+    <h2>User Profile</h2>
+    {loading ? (
+      <p>Loading...</p>
+    ) : (
+      <>
+        {userData ? (
+          <>
+            {editMode ? (
+              <div className="edit-mode"> <div>
                   <label>Avatar:</label>
                   <input type="file" name="avatarFile" onChange={handleInputChange} />
-
+                </div>
+                <div>
+                  <label>First Name:</label>
+                  <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
+                </div>
+                <div>
+                  <label>Last Name:</label>
+                  <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+                </div>
+                <div>
+                  <label>Phone:</label>
+                  <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} />
+                </div>
+               
+                <div className="buttons">
                   <button onClick={handleSaveClick}>Save</button>
                   <button onClick={handleCancelClick}>Cancel</button>
-                </>
-              ) : (
-                <>
+                </div>
+              </div>
+            ) : (
+              <div className="view-mode">
+                <div className="avatar-container">
+                  {userData.avatar && <img src={userData.avatar} alt="Avatar" className="avatar" />}
+                </div>
+                <div className="user-info">
                   <p>Username: {userData.name}</p>
                   <p>First Name: {userData.firstName}</p>
                   <p>Last Name: {userData.lastName}</p>
                   <p>Phone: {userData.phone}</p>
                   <p>Email: {userData.email}</p>
-                  {userData.avatar && <img src={userData.avatar} alt="Avatar" style={{ width: "100px", height: "100px" }} />}
+                </div>
+                <div>
                   <button onClick={handleEditClick}>Edit Profile</button>
-                </>
-              )}
-            </>
-          ) : (
-            <p>No user data available.</p>
-          )}
-        </>
-      )}
-    </div>
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <p>No user data available.</p>
+        )}
+      </>
+    )}
+  </div>
   );
 };
 

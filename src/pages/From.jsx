@@ -1,4 +1,4 @@
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 import "./form.css";
 import { auth, firestore } from "../firebase";
 import Swal from 'sweetalert2';
@@ -24,7 +24,7 @@ const Form = () => {
     }
   };
 
-  const handleRegisterClicks= () =>{
+  const handleRegisterClicks = () => {
     setRegisterActive(true);
   };
 
@@ -84,7 +84,7 @@ const Form = () => {
       console.error("Registration error:", error.message);
     }
   };
-  
+
 
   const handleLoginClick = () => {
     setRegisterActive(false);
@@ -114,7 +114,7 @@ const Form = () => {
       } else {
         console.log("User login successful!");
         // Perform actions specific to regular user login
-        navigate("/home");
+        navigate("/");
       }
     } catch (error) {
       console.error("Login error:", error.message);
@@ -128,17 +128,17 @@ const Form = () => {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-  
+
     try {
       const email = document.getElementById("loginEmail").value;
-  
+
       if (!email) {
         throw new Error('Email is required');
       }
-  
+
       // Send a password reset email
       await auth.sendPasswordResetEmail(email);
-  
+
       // Display SweetAlert success message
       Swal.fire({
         icon: 'success',
@@ -159,10 +159,10 @@ const Form = () => {
     <>
       <div id="Themepage">
         <div
-          className={`containers ${isRegisterActive ? "active" : ""}`}
-          id="containers"
+          className={`containers-from ${isRegisterActive ? "active-from" : ""}`}
+          id="containers-from"
         >
-          <div className="form-container sign-up">
+          <div className="form-container-from sign-up-from">
             <form>
               <h1>Create Account</h1>
               <span>or use your email for registration</span>
@@ -183,7 +183,7 @@ const Form = () => {
               <button onClick={handleRegisterClick}>Sign Up</button>
             </form>
           </div>
-          <div className="form-container sign-in">
+          <div className="form-container-from sign-in-from">
             <form>
               <h1>Sign In</h1>
               <span>or use your email password</span>
@@ -199,26 +199,26 @@ const Form = () => {
               <button onClick={handleLogin}>Sign In</button>
             </form>
           </div>
-          <div className="toggle-container">
-            <div className="toggle">
+          <div className="toggle-container-from">
+            <div className="toggle-from">
               <div
-                className={`toggle-panel toggle-left ${
-                  isRegisterActive ? "hidden" : ""
+                className={`toggle-panel-from toggle-left-from ${
+                  isRegisterActive ? "hidden-from" : ""
                 }`}
               >
                 <h1>Welcome Back!</h1>
                 <p>Enter your personal details to use all of site features</p>
                 <button
                   onClick={handleLoginClick}
-                  className="hidden"
-                  id="login"
+                  className="hidden-from"
+                  id="login-from"
                 >
                   Sign In
                 </button>
               </div>
               <div
-                className={`toggle-panel toggle-right ${
-                  isRegisterActive ? "" : "hidden"
+                className={`toggle-panel-from toggle-right-from ${
+                  isRegisterActive ? "" : "hidden-from"
                 }`}
               >
                 <h1>Hello, Friend!</h1>
@@ -228,8 +228,8 @@ const Form = () => {
                 </p>
                 <button
                   onClick={handleRegisterClicks}
-                  className="hidden"
-                  id="register"
+                  className="hidden-from"
+                  id="register-from"
                 >
                   Sign Up
                 </button>
