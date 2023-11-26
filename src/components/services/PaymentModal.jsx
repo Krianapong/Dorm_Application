@@ -11,9 +11,9 @@ const PaymentModal = ({
   roomNumber,
 }) => {
   return (
-    <Modal show={show} onHide={onHide}>
+    <Modal show={show} onHide={onHide} aria-labelledby="payment-modal-title">
       <Modal.Header closeButton>
-        <Modal.Title>รายละเอียดการบริการ</Modal.Title>
+        <Modal.Title id="payment-modal-title">รายละเอียดการบริการ</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <div>
@@ -24,10 +24,10 @@ const PaymentModal = ({
             ))}
           </ul>
         </div>
-        <p>ยอดรวม: {totalAmount} บาท</p>
-        <p>ชื่อผู้ใช้: {userName}</p>
-        <p>เบอร์โทร: {userPhone}</p>
-        <p>หมายเลขห้อง: {roomNumber}</p>
+        <p>ยอดรวม: {totalAmount ? formatCurrency(totalAmount) : 'N/A'} บาท</p>
+        <p>ชื่อผู้ใช้: {userName || 'N/A'}</p>
+        <p>เบอร์โทร: {userPhone || 'N/A'}</p>
+        <p>หมายเลขห้อง: {roomNumber || 'N/A'}</p>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={onHide}>
@@ -39,6 +39,11 @@ const PaymentModal = ({
       </Modal.Footer>
     </Modal>
   );
+};
+
+// Function to format currency (e.g., add commas)
+const formatCurrency = (amount) => {
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 };
 
 export default PaymentModal;

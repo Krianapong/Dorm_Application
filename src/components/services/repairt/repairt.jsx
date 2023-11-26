@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "./service.css";
 import ServiceDetails from "../ServiceDetails";
 import { Modal, Button } from "react-bootstrap";
 import firebase from "firebase/compat/app";

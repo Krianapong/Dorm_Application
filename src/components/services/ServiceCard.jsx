@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom"; 
-import "./service.css";
-import Heading from "../common/Heading";
+import "../services/service.css";
 
 export const Service = [
   {
@@ -21,9 +20,7 @@ export const Service = [
 
 const FeaturedCard = () => {
   return (
-    <>
-      <Heading title='Blog' subtitle='It is a long established fact that a reader will be distracted by the of readable content of a page when lookings at its layouts the points of using.' />
-      
+    <>      
     <div className="content-user grid-service servicetop">
       {Service.map((item, index) => (
         <div className="box-service" key={index}>

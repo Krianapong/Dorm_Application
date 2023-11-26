@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "./service.css";
 import ServiceDetails from "../ServiceDetails";
 import { Modal, Button } from "react-bootstrap";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import PaymentModal from "../PaymentModal";
+import "../Global.css";
 
 const Service = () => {
   const userUID = firebase.auth().currentUser.uid;
@@ -179,14 +179,10 @@ const Service = () => {
   return (
     <>
       <div className="container-blog">
-        <h1>บริการรักษาความปลอดภัย</h1>
-        <button className="top-right-button" onClick={handleOpenModal}>
-          ชำระเงิน
-        </button>
         <div className="sections-container">
           <section className="section1">
             <div className="security-header">
-              <text className="security-text">หัวข้อการบริการ</text>
+              <h1>บริการรักษาความปลอดภัย</h1>
             </div>
             <label className="security-label">
               <input
@@ -220,7 +216,7 @@ const Service = () => {
             </label>
             <div className="security-img">
               <div className="security-header">
-                <text className="security-text">อัปโหลดรูปภาพ</text>
+                <h2>อัปโหลดรูปภาพ</h2>
               </div>
               <input
                 type="file"
@@ -235,29 +231,27 @@ const Service = () => {
               />
             </div>
           </section>
-          <div className="sections-main">
-            <section className="section2">
-              <div className="security-head">
-                <text className="security-text">หัวข้อที่รับบริการ</text>
-              </div>
-              <ServiceDetails selectedServices={selectedServices} />
-              <text className="total-price">ยอดรวม: {totalAmount} บาท</text>
-            </section>
-            <section className="section3">
-              <div className="security-head">
-                <text className="security-text">รายเอียดการบริการ</text>
-              </div>
-              <text className="left-align">
-                เวลาให้บริการ : 08.00 - 20.00 น.
-              </text>
-              <br />
-              <text className="left-align">
-                **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ
-                **
-              </text>
-            </section>
-          </div>
+          <section className="section2">
+            <div className="security-head">
+              <h2>หัวข้อที่รับบริการ</h2>
+            </div>
+            <ServiceDetails selectedServices={selectedServices} />
+            <p className="total-price">ยอดรวม: {totalAmount} บาท</p>
+          </section>
+          <section className="section3">
+            <div className="security-head">
+              <h2>รายเอียดการบริการ</h2>
+            </div>
+            <p className="left-align">เวลาให้บริการ : 08.00 - 20.00 น.</p>
+            <p className="left-align">
+              **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ
+              **
+            </p>
+          </section>
         </div>
+        <button className="top-right-button" onClick={handleOpenModal}>
+          ชำระเงิน
+        </button>
       </div>
       <Modal show={showModal} onHide={handleCloseModal}>
         <Modal.Header closeButton>
@@ -293,7 +287,6 @@ const Service = () => {
         </Modal.Footer>
         {confirmation && <div>รายการถูกยืนยันแล้ว</div>}
       </Modal>
-      
     </>
   );
 };

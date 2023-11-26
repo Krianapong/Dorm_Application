@@ -35,7 +35,7 @@ const Pages = () => {
           <Route path="/housewife" element={<HousewifeUser />} />
           <Route path="/repairt" element={<RepairUser />} />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </Router>
     </>
   );
