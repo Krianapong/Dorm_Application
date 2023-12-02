@@ -9,11 +9,7 @@ const Blog = () => {
     <>
       <section className='blog-out mb'>
         <Back name='Blog' title='Blog Grid - Our Blogs' cover={img} />
-        <div className='container flex mtop'>
-          <div className='left row'>
             <BlogCard />
-          </div>
-        </div>
       </section>
     </>
   )

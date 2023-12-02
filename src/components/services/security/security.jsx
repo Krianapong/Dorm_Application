@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import ServiceDetails from "../ServiceDetails";
-import { Modal, Button } from "react-bootstrap";
+import ReactModal from 'react-modal';
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
-import PaymentModal from "../PaymentModal";
 import "../Global.css";
+import Heading from "../../common/Heading";
 
 const Service = () => {
   const userUID = firebase.auth().currentUser.uid;
@@ -178,117 +178,127 @@ const Service = () => {
 
   return (
     <>
-      <div className="container-blog">
-        <div className="sections-container">
-          <section className="section1">
-            <div className="security-header">
-              <h1>บริการรักษาความปลอดภัย</h1>
-            </div>
-            <label className="security-label">
-              <input
-                className="custom-checkbox"
-                type="checkbox"
-                checked={selectedServices.catchDangerousAnimals}
-                onChange={() => handleCheckboxChange("catchDangerousAnimals")}
-              />
-              บริการจับสัตว์อันตราย (ราคา: 20 บาท)
-            </label>
-            <br />
-            <label className="security-label">
-              <input
-                className="custom-checkbox"
-                type="checkbox"
-                checked={selectedServices.environmentProtection}
-                onChange={() => handleCheckboxChange("environmentProtection")}
-              />
-              บริการรักษาสิ่งแวดล้อมบริเวณหอ (ฟรี)
-            </label>
-            <br />
-            <label className="security-label">
-              <input
-                className="custom-checkbox"
-                type="checkbox"
-                checked={selectedServices.foodDelivery}
-                onChange={() => handleCheckboxChange("foodDelivery")}
-              />
-              บริการนำอาหารและเครื่องไปส่งที่ห้อง (ราคา: {foodDeliveryPrice}{" "}
-              บาท)
-            </label>
-            <div className="security-img">
-              <div className="security-header">
-                <h2>อัปโหลดรูปภาพ</h2>
+      <div className='container flex mtop'>
+        <div className='left row'>
+          <Heading title='Security' />
+          <div className="services-card">
+            <div className="services-container">
+              <div className="upload-container">
+                <section className="section1">
+                  <div className="service-title">
+                    <h2>บริการรักษาความปลอดภัย</h2>
+                  </div>
+                  <label className="checkbox-label">
+                    <input
+                      className="checkbox-input"
+                      type="checkbox"
+                      checked={selectedServices.catchDangerousAnimals}
+                      onChange={() => handleCheckboxChange("catchDangerousAnimals")}
+                    />
+                    บริการจับสัตว์อันตราย (ราคา: 20 บาท)
+                  </label>
+                  <br />
+                  <label className="checkbox-label">
+                    <input
+                      className="checkbox-input"
+                      type="checkbox"
+                      checked={selectedServices.environmentProtection}
+                      onChange={() => handleCheckboxChange("environmentProtection")}
+                    />
+                    บริการรักษาสิ่งแวดล้อมบริเวณหอ (ฟรี)
+                  </label>
+                  <br />
+                  <label className="checkbox-label">
+                    <input
+                      className="checkbox-input"
+                      type="checkbox"
+                      checked={selectedServices.foodDelivery}
+                      onChange={() => handleCheckboxChange("foodDelivery")}
+                    />
+                    บริการนำอาหารและเครื่องไปส่งที่ห้อง (ราคา: {foodDeliveryPrice} บาท)
+                  </label>
+                  <div className="upload-section">
+                    <div className="upload-title">
+                      <h2>อัปโหลดรูปภาพ</h2>
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                      className="file-input"
+                    />
+                    <img
+                      className="uploaded-image"
+                      src={imageUrl || "https://via.placeholder.com/150"}
+                      alt="Uploaded"
+                    />
+                  </div>
+                </section>
+                <section className="section2">
+                  <div className="service-title">
+                    <h2>หัวข้อที่รับบริการ</h2>
+                  </div>
+                  <p className="service-details"><ServiceDetails selectedServices={selectedServices} /></p>
+                  <p className="total-amount">ยอดรวม: {totalAmount} บาท</p>
+                </section>
+                <section className="section3">
+                  <div className="service-title">
+                    <h2>รายเอียดการบริการ</h2>
+                  </div>
+                  <p className="service-details">
+                    เวลาให้บริการ : 08.00 - 20.00 น.
+                  </p>
+                  <p className="service-details">
+                    **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ **
+                  </p>
+                </section>
               </div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="security-input"
-              />
-              <img
-                className="security-imageUrl"
-                src={imageUrl || "https://via.placeholder.com/150"}
-                alt="Uploaded"
-              />
+              <button className="payment-button" onClick={handleOpenModal}>
+                ชำระเงิน
+              </button>
             </div>
-          </section>
-          <section className="section2">
-            <div className="security-head">
-              <h2>หัวข้อที่รับบริการ</h2>
-            </div>
-            <ServiceDetails selectedServices={selectedServices} />
-            <p className="total-price">ยอดรวม: {totalAmount} บาท</p>
-            <button className="payment-button" onClick={handleOpenModal}>
-          ชำระเงิน
-        </button>
-          </section>
-          <section className="section3">
-            <div className="security-head">
-              <h2>รายเอียดการบริการ</h2>
-            </div>
-            <p className="left-align service-hours">
-              เวลาให้บริการ : 08.00 - 20.00 น.
-            </p>
-            <p className="left-align non-service-days">
-              **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ **
-            </p>
-          </section>
-        </div>
-        
-      </div>
-      <Modal show={showModal} onHide={handleCloseModal}>
-        <Modal.Header closeButton>
-          <Modal.Title>รายละเอียดการบริการ</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <ServiceDetails selectedServices={selectedServices} />
-          <p>ยอดรวม: {totalAmount} บาท</p>
-          {hasMultipleRooms && (
+          </div>
+
+          <ReactModal
+            isOpen={showModal}
+            onRequestClose={handleCloseModal}
+            contentLabel="Example Modal"
+            className="custom-modal" // Add your custom class
+          >
             <div>
-              <label htmlFor="roomSelect">เลือกห้อง:</label>
-              <select
-                id="roomSelect"
-                onChange={(e) => setSelectedRoom(e.target.value)}
-                value={selectedRoom}
-              >
-                {userRooms.map((room) => (
-                  <option key={room.numroom} value={room.numroom}>
-                    Room {room.numroom}
-                  </option>
-                ))}
-              </select>
+              <h1 className="custom-modal-title">รายละเอียดการบริการ</h1>
+              <div className="custom-modal-body">
+                <ServiceDetails selectedServices={selectedServices} />
+                <p>ยอดรวม: {totalAmount} บาท</p>
+                {hasMultipleRooms && (
+                  <div>
+                    <label htmlFor="roomSelect">เลือกห้อง:</label>
+                    <select
+                      id="roomSelect"
+                      onChange={(e) => setSelectedRoom(e.target.value)}
+                      value={selectedRoom}
+                    >
+                      {userRooms.map((room) => (
+                        <option key={room.numroom} value={room.numroom}>
+                          Room {room.numroom}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+              </div>
+              <div className="custom-modal-footer">
+                <button className="custom-modal-buttons-a" onClick={handlePayment}>
+                  ยืนยัน
+                </button>
+                <button className="custom-modal-buttons-c" onClick={handleCloseModal}>
+                  ยกเลิก
+                </button>
+              </div>
             </div>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary" onClick={handlePayment}>
-            ยืนยัน
-          </Button>
-          <Button variant="secondary" onClick={handleCloseModal}>
-            ยกเลิก
-          </Button>
-        </Modal.Footer>
-        {confirmation && <div>รายการถูกยืนยันแล้ว</div>}
-      </Modal>
+          </ReactModal>
+        </div>
+      </div>
     </>
   );
 };

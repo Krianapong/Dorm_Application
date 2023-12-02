@@ -1,5 +1,5 @@
 import React from "react";
-import "./ServiceDetails.css";
+
 const ServiceDetails = ({ selectedServices }) => {
   return (
     <div>

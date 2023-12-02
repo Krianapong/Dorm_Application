@@ -96,6 +96,7 @@ const Profile = () => {
   };
 
   return (
+    <div className="card-profile">
     <div className="profile-container">
     <h2>User Profile</h2>
     {loading ? (
@@ -106,20 +107,20 @@ const Profile = () => {
           <>
             {editMode ? (
               <div className="edit-mode"> <div>
-                  <label>Avatar:</label>
-                  <input type="file" name="avatarFile" onChange={handleInputChange} />
+                <label>Avatar:</label>
+                  <input type="file" name="avatarFile" onChange={handleInputChange}  className="input-edit"  />
                 </div>
                 <div>
                   <label>First Name:</label>
-                  <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange} />
+                  <input type="text" name="firstName" value={formData.firstName} onChange={handleInputChange}  className="input-edit" />
                 </div>
                 <div>
                   <label>Last Name:</label>
-                  <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+                  <input type="text" name="lastName" value={formData.lastName} onChange={handleInputChange}  className="input-edit"  />
                 </div>
                 <div>
                   <label>Phone:</label>
-                  <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} />
+                  <input type="text" name="phone" value={formData.phone} onChange={handleInputChange} className="input-edit" />
                 </div>
                
                 <div className="buttons">
@@ -132,12 +133,18 @@ const Profile = () => {
                 <div className="avatar-container">
                   {userData.avatar && <img src={userData.avatar} alt="Avatar" className="avatar" />}
                 </div>
-                <div className="user-info">
-                  <p>Username: {userData.name}</p>
-                  <p>First Name: {userData.firstName}</p>
-                  <p>Last Name: {userData.lastName}</p>
-                  <p>Phone: {userData.phone}</p>
-                  <p>Email: {userData.email}</p>
+
+                <div>
+                  <label className="text-view">First Name:</label>
+                  <input type="text" name="firstName" value={userData.firstName} className="input-view" />
+                </div>
+                <div>
+                  <label className="text-view">Last Name:</label>
+                  <input type="text" name="lastName" value={userData.lastName} className="input-view"  />
+                </div>
+                <div>
+                  <label className="text-view">Phone:</label>
+                  <input type="text" name="phone" value={userData.phone} className="input-view" />
                 </div>
                 <div>
                   <button onClick={handleEditClick}>Edit Profile</button>
@@ -150,6 +157,7 @@ const Profile = () => {
         )}
       </>
     )}
+  </div>
   </div>
   );
 };

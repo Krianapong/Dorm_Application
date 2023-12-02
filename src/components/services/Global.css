@@ -1,75 +1,138 @@
-/* Add these styles to your Global.css or create a new CSS file */
-.container-blog {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .sections-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-  }
-  
-  .section1, .section2, .section3 {
-    background-color: #f9f9f9;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .security-header h1 {
-    color: #007bff;
-  }
-  
-  .security-label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  .security-input {
-    margin-top: 10px;
-  }
-  
-  .security-img {
-    margin-top: 20px;
-  }
-  
-  .security-imageUrl {
-    width: 100%;
-    max-height: 200px;
-    object-fit: cover;
-    border-radius: 8px;
-  }
-  
-  .payment-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
+/* Container Styles */
+.services-card {
+  display: flex;
+  justify-content: center;
+  margin: 50px 20px 50px 20px;
+  height: 100%;
+}
 
-  /* Add responsive styles */
-  @media (max-width: 768px) {
-    .sections-container {
-      flex-direction: column;
-    }
-  
-    .section1, .section2, .section3 {
-      width: 100%;
-      margin-bottom: 20px;
-    }
+.services-container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-    .payment-button {
-        position: relative;
-        bottom: auto;
-        right: auto;
-        margin-top: 20px; /* Add margin for spacing */
-      }
-  }
-  
+/* Section Styles */
+.upload-container {
+  display: flex;
+}
+
+.section1,
+.section3 {
+  flex: 1;
+  padding: 20px;
+}
+.section2 {
+  flex: 1;
+  padding: 20px;
+  width: 50vh;
+}
+
+/* Service Title Styles */
+.service-title {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Checkbox Styles */
+.checkbox-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.checkbox-input {
+  margin-right: 5px;
+}
+
+/* Upload Section Styles */
+.upload-section {
+  margin-top: 20px;
+}
+
+.upload-title {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.file-input {
+  margin-top: 10px;
+}
+
+.uploaded-image {
+  width: 30vh;
+  height: 30vh;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+/* Button Styles */
+.payment-button {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px 20px 20px 89%;
+  border-radius: 5px;
+}
+
+.payment-button:hover {
+  background-color: #27ae60;
+}
+
+/* Total Amount Styles */
+.total-amount {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Service Details Styles */
+.service-details {
+  margin-top: 10px;
+}
+
+/* ModalStyles.css */
+.custom-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  width: 800px;
+  /* Adjust width as needed */
+}
+
+.custom-modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.custom-modal-body {
+  margin-bottom: 20px;
+}
+
+.custom-modal-footer {
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+}
+
+.custom-modal-buttons-a  {
+  background-color: #27ae60;
+  margin-right: 10px;
+}
+.custom-modal-buttons-c  {
+  background-color: #cf1c1c;
+  margin-right: 10px;
+}
