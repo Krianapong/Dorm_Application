@@ -32,8 +32,6 @@ const RecentCard = () => {
           data.push(zoneData);
         }
 
-
-
         setZones(data);
       } catch (error) {
         console.error("Error fetching data:", error.message);
