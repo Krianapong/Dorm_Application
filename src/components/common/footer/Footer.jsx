@@ -5,7 +5,7 @@ import "./footer.css"
 const Footer = () => {
   return (
     <>
-      {/* <footer>
+      <footer>
         <div className='container'>
           <div className='box'>
             <div className='logo'>
@@ -34,7 +34,7 @@ const Footer = () => {
       </footer>
       <div className='legal'>
         <span>© 2021 RentUP. Designd By GorkCoder.</span>
-      </div> */}
+      </div> 
     </>
   )
 }
