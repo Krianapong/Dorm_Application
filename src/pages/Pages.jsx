@@ -15,6 +15,7 @@ import ServiceUser from "../components/services/security/security";
 import HousewifeUser from "../components/services/housewife/housewife";
 import RepairUser from "../components/services/repairt/repairt";
 import DetailsRoom from "../components/room/DetailsRoom";
+import Cost from "../components/cost/Cost";
 
 const Pages = () => {
   return (
@@ -36,6 +37,7 @@ const Pages = () => {
           <Route path="/housewife" element={<HousewifeUser />} />
           <Route path="/repairt" element={<RepairUser />} />
           <Route path="/roomdetail" element={<DetailsRoom />} />
+          <Route path="/cost" element={<Cost />} />
         </Routes>
         <Footer />
       </Router>
