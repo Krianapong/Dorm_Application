@@ -4,13 +4,14 @@ import "firebase/compat/firestore"; // สำหรับฐานข้อม�
 import "firebase/compat/storage"; // สำหรับรูปภาพ
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAnd6Kzwfaq-2BP1Vjb7wim-sxVqQg7__A",
-  authDomain: "fir-project-9eb26.firebaseapp.com",
-  projectId: "fir-project-9eb26",
-  storageBucket: "fir-project-9eb26.appspot.com",
-  messagingSenderId: "13071460974",
-  appId: "1:13071460974:web:0923a424e65c9cfe95147f",
-  measurementId: "G-74JD0S1RW4"
+  apiKey: "AIzaSyDG_Z8LkAD5BvPgRiCmNfB_Ir09rUtMQGA",
+  authDomain: "hopak-8af20.firebaseapp.com",
+  databaseURL: "https://hopak-8af20-default-rtdb.firebaseio.com",
+  projectId: "hopak-8af20",
+  storageBucket: "hopak-8af20.appspot.com",
+  messagingSenderId: "940936256349",
+  appId: "1:940936256349:web:8ec07e1976e26e62c926b4",
+  measurementId: "G-PZEW03FQTX"
 };
 
 const db = firebase.initializeApp(firebaseConfig);

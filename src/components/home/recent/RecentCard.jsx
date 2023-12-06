@@ -1,86 +1,116 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
+import { firestore } from "../../../firebase";
 import { Link } from "react-router-dom";
-import { firestore } from "../../../firebase"; // แทนที่ด้วย configuration ของ Firebase ที่คุณใช้
+import { Dna } from 'react-loader-spinner'
 
 const RecentCard = () => {
-  const [zones, setZones] = useState([]);
-
+  const category = "For Sale";
+  const [roomInfo, setRoomInfo] = useState([]);
+  const [Loading, setLoading] = useState(false)
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = [];
+    try {
+      const fetchData = async () => {
+        const collRef = firestore.collection('rooms').where('status', '==', 'Vacant');
+        const querySnapshot = await collRef.get();
+        const InfoRoom = [];
+        setLoading(true);
 
-        // ดึงข้อมูลโซนทั้งหมด
-        const zonesSnapshot = await firestore.collection("zones").get(); // แทนที่ด้วยชื่อคอลเลคชันที่คุณใช้
 
-        // วนลูปทุกรายการในโซน
-        for (const zoneDoc of zonesSnapshot.docs) {
-          // ดึงข้อมูลห้องภายในแต่ละโซน
-          const roomsSnapshot = await firestore
-            .collection("zones")
-            .doc(zoneDoc.id)
-            .collection("rooms")
-            .get();
+        await Promise.all(
+          querySnapshot.docs.map(async (docs) => {
+            const id = docs.id;
+            const type = docs.data().type;
+            const status = docs.data().status;
 
-          // วนลูปทุกรายการห้องและเก็บข้อมูล
-          const zoneData = {
-            id: zoneDoc.id,
-            name: zoneDoc.data().name,
-            rooms: roomsSnapshot.docs.map((roomDoc) => roomDoc.data()),
-          };
-
-          data.push(zoneData);
-        }
-
-        setZones(data);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
+            const docRef = await firestore.collection('typerooms').doc(type).get();
+            if (docRef.exists) {
+              const imageUrl = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${docRef.data().img}?alt=media`
+              const data = {
+                roomNumber: id,
+                roomType: docRef.data().name,
+                roomStatus: status,
+                roomPrice: docRef.data().price,
+                roomLocation: docRef.data().location,
+                roomImg: imageUrl,
+              }
+              //console.log(data);
+              InfoRoom.push(data);
+            } else {
+              console.log('ไม่พบข้อมูลชนิดห้องพัก');
+            }
+          })
+        )
+        setRoomInfo(InfoRoom);
+        setLoading(false);
       }
-    };
-
-    fetchData();
+      fetchData();
+    } catch (error) {
+      console.log('ดึงข้อมูลห้องพักผิดพลาด: ', error);
+    }
   }, []);
 
-  return (
-    <>
-      {zones.map((zone) => (
-        //<div key={zone.id}>
-        //<h2>{zone.name}</h2>
+  if (Loading === true) {
+    return (
+      <>
+        <div className="Loading" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <>
+            <Dna
+              visible={true}
+              height="80"
+              width="80"
+              ariaLabel="dna-loading"
+              wrapperStyle={{}}
+              wrapperClass="dna-wrapper"
+            />
+          </>
+        </div>
+      </>
+    )
+  } else {
+    return (
+      <>
         <div className='content grid3 mtop'>
-          {zone.rooms.map((room, index) => {
-            const { image, roomNumber, date, price, type, location} = room;
+          {roomInfo.map((data) => {
             return (
-              <div className='box shadow' key={index}>
+              <div className='box shadow' key={data.roomNumber}>
                 <div className='img'>
-                  <img src={image} alt='' />
+                  <img src={data.roomImg} alt='' />
                 </div>
                 <div className='text'>
                   <div className='category flex'>
-                    <span style={{ background: type === "For Sale" ? "#25b5791a" : "#ff98001a", color: type === "For Sale" ? "#25b579" : "#ff9800" }}>{type}</span>
+                    <span style={{ background: category === "For Sale" ? "#25b5791a" : "#ff98001a", color: category === "For Sale" ? "#25b579" : "#ff9800" }}>
+                      {data.roomStatus}
+                    </span>
                   </div>
-                  <h4>ห้อง {roomNumber}</h4>
+                  <h4>ห้องพัก {data.roomNumber} ชนิดห้อง {data.roomType}</h4>
                   <p>
-                    <i className='fa fa-location-dot'></i> ชั้น {location}
+                    <FontAwesomeIcon icon={faMapMarkerAlt} />  {data.roomLocation}
                   </p>
                 </div>
                 <div className='button flex'>
-                  
                   <div>
-                    <Link to={`/details/${roomNumber}`} >
-                      <button className='btn2'>{price}</button>
-                    </Link>{" "}
-                    <label htmlFor=''>/บาท</label>
+                    <Link to={'/roomdetail'} state={{
+                      roomNumber: data.roomNumber,
+                      roomLocation: data.roomLocation,
+                      roomStatus: data.roomStatus,
+                      roomPrice: data.roomPrice,
+                      roomType: data.roomType,
+                      roomImg: data.roomImg
+                    }}>
+                      <button className="btn2">{data.roomPrice}</button>
+                    </Link> <label htmlFor=''>/month</label>
                   </div>
-                  <span>{date}</span>
+                  <span>{data.date}</span>
                 </div>
               </div>
-            );
+            )
           })}
         </div>
-       // </div>
-      ))}
-    </>
-  );
-};
+      </>
+    )
+  }
+}
 
-export default RecentCard;
+export default RecentCard

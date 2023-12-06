@@ -62,7 +62,7 @@ const BlogCard = () => {
             {newsPage.map((newsItem, index) => (
               <div className='box shadow' key={index}>
                 <div className='img'>
-                  <img src={newsItem.image} alt={newsItem.title} />
+                  <img src={newsItem.image} alt={newsItem.title} className="img-new"/>
                 </div>
                 <div className='text'>
                   <div className='category flex'>

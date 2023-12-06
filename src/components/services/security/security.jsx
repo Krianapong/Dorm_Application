@@ -263,7 +263,7 @@ const Service = () => {
             isOpen={showModal}
             onRequestClose={handleCloseModal}
             contentLabel="Example Modal"
-            className="custom-modal" // Add your custom class
+            className="custom-modal"
           >
             <div>
               <h1 className="custom-modal-title">รายละเอียดการบริการ</h1>

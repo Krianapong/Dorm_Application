@@ -35,7 +35,7 @@ const Pages = () => {
           <Route path="/security" element={<ServiceUser />} />
           <Route path="/housewife" element={<HousewifeUser />} />
           <Route path="/repairt" element={<RepairUser />} />
-          <Route path="/details/:roomNumber" element={<DetailsRoom />} />
+          <Route path="/roomdetail" element={<DetailsRoom />} />
         </Routes>
         <Footer />
       </Router>

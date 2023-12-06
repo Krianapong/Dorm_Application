@@ -1,0 +1,153 @@
+.main-room {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .room-body {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 83vh;
+    border-radius: 50px;
+    background: #ffffff;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.125);
+    margin: 10px;
+    position: relative;
+  }
+  
+  .img-room {
+    width: 50%;
+    height: 83vh;
+    border-radius: 50px 0 0 50px;
+    position: relative;
+  }
+  .footer-room {
+    margin-bottom: 2%;
+    margin-right: 2%;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+  .room-button {
+    border-radius: 45px;
+  }
+  .room-header {
+    position: absolute;
+    top: 0;
+    left: 67%;
+    transform: translateX(-50%); 
+  }
+  .room-title {
+    font-size: 40px;
+    color: #000;
+  }
+  .room-detail {
+    position: absolute;
+    top: 20%;
+    left: 70%;
+    transform: translateX(-50%); 
+  }
+  .room-category,
+  .room-type,
+  .room-price {
+    font-size: 20px;
+    color: #717171;
+  }
+  
+  .room-location {
+    font-size: 20px;
+    color: #717171;
+  }
+  
+  .room-ll {
+    font-size: 16px;
+    color: #717171;
+  }
+  .room1 {
+    font-size: 24px;
+    color: #000;
+  }
+  
+  .close-button {
+    background-color: #ff5733;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    background-color: #ff331a; 
+  }
+  
+  .add-room-button {
+    background-color: #33ff57;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .add-room-button:hover {
+    background-color: #2ecc51;
+  }
+  
+  .container-room-detail {
+    display: flex;
+    align-items: center; 
+  }
+  
+  .left-room {
+    flex: 1; 
+    padding: 10px; 
+    text-align: center; 
+  }
+  
+  .left-room img {
+    max-width: 100%; 
+  }
+  
+  .left-room p {
+    margin: 10px 0; 
+  }
+  
+  .right-room {
+    flex: 1; 
+    padding: 10px; 
+  }
+  
+  .right-room input[type='file'] {
+    border: 1px solid #ccc;
+    padding: 5px;
+    width: 100%;
+  }
+  
+  .right-room img {
+    max-width: 100%;
+  }
+  .room-price {
+    font-size: 20px;
+    color: #ff0000; 
+    text-transform: uppercase; 
+  }
+  
+  .room-ll {
+    font-size: 20px;
+    color: #110324; 
+    text-transform: uppercase; 
+  }
+  
+  .room-type {
+    font-size: 20px;
+    color: #110324; 
+    text-transform: uppercase; 
+  }
+  
+  .room-location {
+    font-size: 20px;
+    color: #110324; 
+    text-transform: uppercase; 
+  }
