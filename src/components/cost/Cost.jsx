@@ -10,7 +10,7 @@ const LineChart = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://api.thingspeak.com/channels/2366489/fields/1.json?results=11"
+          "https://api.thingspeak.com/channels/2366489/fields/1.json?results"
         );
 
         // Assuming the data you need is in the 'feeds' array
