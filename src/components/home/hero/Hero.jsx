@@ -7,9 +7,9 @@ const Hero = () => {
     <>
       <section className='hero'>
         <div className='container'>
-          <Heading title='Search Your Next Home ' subtitle='Find new & featured property located in your local city.' />
+          <Heading title='Welcome to Website ' subtitle='Discover Exceptional Comfort at Website HoPak – Your Premier Choice for Accommodation!' />
 
-          <form className='flex'>
+          {/*<form className='flex'>
             <div className='box'>
               <span>City/Street</span>
               <input type='text' placeholder='Location' />
@@ -28,7 +28,7 @@ const Hero = () => {
             <button className='btn1'>
               <i className='fa fa-search'></i>
             </button>
-          </form>
+  </form> */}
         </div>
       </section>
     </>

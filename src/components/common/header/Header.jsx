@@ -12,6 +12,7 @@ import ChatIcon from "@mui/icons-material/Chat";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Avatar from "@mui/material/Avatar";
 import imgProfile from "../../../images/profiles.jpg";
+import Logo from "../../../images/HoPak.png";
 
 const Header = () => {
   const [navList, setNavList] = useState(false);
@@ -74,10 +75,13 @@ const Header = () => {
       <header>
         <div className="container flex">
           <div className="logo">
-            <img src="./images/logo-light.png" alt="" />
+            <img src={Logo} alt="" style={{ width: '50px', height: 'auto' }} />
+            <div className="logo-text">
+               <h2>HoPak</h2>
+            </div>
           </div>
           <div className="nav">
-            <ul className={navList ? "small" : "flex"}>
+            <ul className={navList ? "small" : "flex"}> 
               {nav.map((list, index) => (
                 <li key={index}>
                   <Link to={list.path}>{list.text}</Link>
@@ -93,6 +97,9 @@ const Header = () => {
                   </li>
                   <li>
                     <Link to="/cost">Cost of Utilities</Link>
+                  </li>
+                  <li>
+                    <Link to="/calendar">Calendar</Link>
                   </li>
                 </>
               )}

@@ -34,6 +34,18 @@ header h4 {
 header .toggle {
   display: none;
 }
+header .logo {
+  display: flex;
+  align-items: center;
+}
+
+header .logo img {
+  width: 170px;
+}
+header .logo-text {
+  color: #FA9231;
+  margin-left: 10px; 
+}
 
 @media screen and (max-width: 768px) {
   header {

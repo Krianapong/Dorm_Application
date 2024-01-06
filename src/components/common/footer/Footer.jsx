@@ -1,6 +1,7 @@
 import React from "react"
 import { footer } from "../../../data/Data"
 import "./footer.css"
+import Logo from "../../../images/HoPak_.png"
 
 const Footer = () => {
   return (
@@ -9,7 +10,7 @@ const Footer = () => {
         <div className='container'>
           <div className='box'>
             <div className='logo'>
-              <img src='../images/logo-light.png' alt='' />
+            <img src={Logo} alt="" style={{ width: '50px', height: 'auto' }} />
               <h2>Do You Need Help With Anything?</h2>
               <p>Receive updates, hot deals, tutorials, discounts sent straignt in your inbox every month</p>
 

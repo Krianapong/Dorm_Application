@@ -15,7 +15,8 @@ import ServiceUser from "../components/services/security/security";
 import HousewifeUser from "../components/services/housewife/housewife";
 import RepairUser from "../components/services/repairt/repairt";
 import DetailsRoom from "../components/room/DetailsRoom";
-import Cost from "../components/cost/Cost";
+import Cost from "../components/cost/CostCard";
+import Calendar from "../components/calendar/CalendarCard";
 
 const Pages = () => {
   return (
@@ -38,6 +39,7 @@ const Pages = () => {
           <Route path="/repairt" element={<RepairUser />} />
           <Route path="/roomdetail" element={<DetailsRoom />} />
           <Route path="/cost" element={<Cost />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
         <Footer />
       </Router>

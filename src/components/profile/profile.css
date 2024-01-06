@@ -1,107 +1,61 @@
-/* profile.css */
+.main-profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-.profile-container {
-    max-width: 800px;
-    margin: auto auto auto auto;
-    padding: 20px;  
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.211);
-    border-radius: 8px;
-    overflow: hidden;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  h2 {
-    color: #333;
-  }
-  .input-edit {
-    width: 200px;
-    height: 35px;
-    border: 1px solid #ff0048; 
-    border-radius: 5px; 
-    background-color: #f2f2f2; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    padding: 10px; 
-    margin-bottom: 15px; 
-    margin-left: 10px;
-  }
-  .text-view {
-    font-weight: bold; /* Example style for the label */
-    color: #333; /* Set label text color as needed */
-    margin-bottom: 8px; /* Add margin as needed */
-  }
-  .input-view {
-    width: 200px;
-    height: 35px;
-    border: 1px solid #27ae60; 
-    border-radius: 5px; 
-    background-color: #f2f2f2; 
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-    padding: 10px; 
-    margin-bottom: 15px; 
-    margin-left: 10px;
-  }
-  
-  .input-view p {
-    color: #333; 
-  }
-  
-  .input-view::placeholder {
-    color: #999; 
-  }
-  
-  .edit-mode,
-  .view-mode {
-    margin-top: 20px;
-  }
-  
-  .edit-mode label,
-  .view-mode p {
-    margin-bottom: 8px;
-    font-weight: bold;
-  }
-  
-  .edit-mode input,
-  .view-mode button {
-    margin-bottom: 16px;
-    padding: 8px;
-    width: 100%;
-  }
-  
-  .buttons {
-    display: flex;
-    gap: 20px;
-    justify-content: end;
-  }
-  
-  .avatar-container {
-    text-align: center;
-  }
-  
-  .avatar {
-    border-radius: 50%;
-    width: 300px;
-    height: 250px;
-    object-fit: cover;
-  }
-  
-  .view-mode button,
-  .buttons button {
-    background-color: #27ae60;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .view-mode button:hover,
-  .buttons button:hover {
-    background-color: #27ae60;
-  }
-  
-  .loading {
-    text-align: center;
-    margin-top: 20px;
-  }
-  
+.profile-body {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  height: 83vh;
+  border-radius: 50px;
+  background: #ffffff;
+  box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.125);
+  margin: 10px;
+  position: relative;
+}
+
+.img-profile {
+  width: 50%;
+  height: 83vh;
+  border-radius: 50px 0 0 50px;
+  position: relative;
+}
+.footer-profile {
+  margin-bottom: 2%;
+  margin-right: 2%;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  display: flex;
+}
+
+.footer-profile button {
+  margin-right: 10px; 
+}
+
+
+.profile-ll {
+  font-size: 16px;
+  color: #717171;
+}
+.profile1 {
+  font-size: 24px;
+  color: #000;
+}
+.profile-detail {
+  position: absolute;
+  top: 10%;
+  left: 70%;
+  transform: translateX(-50%); 
+}
+.input-edit {
+  width: 500px;
+  height: 40px;
+  background-color: rgb(255, 255, 255);
+  padding: 10px; 
+  border: 1px solid #ccc; 
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
