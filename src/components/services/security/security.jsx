@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ServiceDetails from "../ServiceDetails";
 import ReactModal from 'react-modal';
 import firebase from "firebase/compat/app";
@@ -20,8 +20,7 @@ const Service = () => {
   });
 
   const [foodDeliveryPrice, setFoodDeliveryPrice] = useState(20);
-  const [environmentProtectionPrice, setEnvironmentProtectionPrice] =
-    useState(0);
+  const [environmentProtectionPrice, setEnvironmentProtectionPrice] = useState(0);
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
