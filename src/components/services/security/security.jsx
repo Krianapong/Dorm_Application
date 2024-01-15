@@ -142,7 +142,6 @@ const Service = () => {
 
         serviceData.imageUrl = imageUrl;
       }
-
       console.log("Service Data:", serviceData);
       await servicesRef.add(serviceData);
 
