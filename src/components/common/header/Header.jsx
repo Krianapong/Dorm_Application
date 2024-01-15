@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./header.css";
 import { nav } from "../../../data/Data";
 import { Link } from "react-router-dom";
-import { auth } from "../../../firebase";
+import { auth, firestore } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
@@ -17,8 +17,8 @@ import Logo from "../../../images/HoPak.png";
 const Header = () => {
   const [navList, setNavList] = useState(false);
   const [user, setUser] = useState(null);
-  const [userAvatar, setUserAvatar] = useState(null); // State for user's avatar
-  const [userName, setUserName] = useState(""); // State for user's name
+  const [userAvatar, setUserAvatar] = useState(null);
+  const [userName, setUserName] = useState(""); 
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
 
@@ -69,13 +69,18 @@ const Header = () => {
     navigate("/profile");
     // handleClose();
   };
+  const handleChatClick = () => {
+    // Handle the logic for navigating to the Profile page
+    navigate("/chat");
+    // handleClose();
+  };
 
   return (
     <>
       <header>
         <div className="container flex">
           <div className="logo">
-            <img src={Logo} alt="" style={{ width: '50px', height: 'auto' }} />
+            <img src={Logo} alt="" style={{ width: '50px', height: 'auto'}} />
             <div className="logo-text">
                <h2>HoPak</h2>
             </div>
@@ -118,6 +123,7 @@ const Header = () => {
                 onClick={handleDropdownClick}
                 alt="Profile"
                 src={userAvatar || imgProfile}
+                style={{ width: '50px', height: 'auto', border: '2px solid' }}
               />
               <span>{userName}</span>
 
@@ -135,7 +141,7 @@ const Header = () => {
                   </ListItemIcon>
                   Profile
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleChatClick}>
                   <ListItemIcon>
                     <ChatIcon />
                   </ListItemIcon>
