@@ -143,6 +143,7 @@ const Service = () => {
         serviceData.imageUrl = imageUrl;
       }
 
+      console.log("Service Data:", serviceData);
       await servicesRef.add(serviceData);
 
       console.log("บริการถูกเพิ่มลงใน Firestore");
