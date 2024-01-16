@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ServiceDetails from "../ServiceDetails";
 import ReactModal from 'react-modal';
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "../Global.css";
-import Heading from "../../common/Heading";
+// import Heading from "../../common/Heading";
+import PaymentModal from "../PaymentModal";
 
 const Repairt = () => {
   const userUID = firebase.auth().currentUser.uid;

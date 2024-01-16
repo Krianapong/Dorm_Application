@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { auth, firestore, storage } from "../../firebase";
 import "./profile.css";
 import { Dna } from 'react-loader-spinner'
+import Heading from "../common/Heading";
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -112,7 +113,9 @@ const Profile = () => {
   };
 
   return (
+
     <div className="main-profile">
+      <Heading title="Profile" />
       <div className="profile-body">
         {loading ? (
           <>

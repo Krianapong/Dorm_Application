@@ -17,6 +17,7 @@ import RepairUser from "../components/services/repairt/repairt";
 import DetailsRoom from "../components/room/DetailsRoom";
 import Cost from "../components/cost/CostCard";
 import Calendar from "../components/calendar/CalendarCard";
+import Chat from "../components/chat/Chat";
 
 const Pages = () => {
   return (
@@ -40,6 +41,7 @@ const Pages = () => {
           <Route path="/roomdetail" element={<DetailsRoom />} />
           <Route path="/cost" element={<Cost />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/chat" element={<Chat /> }/> 
         </Routes>
         <Footer />
       </Router>
