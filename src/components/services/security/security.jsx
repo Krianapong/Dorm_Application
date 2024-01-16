@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
@@ -14,8 +13,6 @@ const Security = () => {
     { name: 'บริการรักษาความปลอดภัยด้วยพนักงานประจำ', price: 1500 },
     { name: 'การตรวจสอบและรักษาความปลอดภัยของทรัพย์สิน', price: 800 },
   ];
-
-  const [selectedServices, setSelectedServices] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
   const [userName, setUserName] = useState(""); // เพิ่ม state สำหรับชื่อผู้ใช้
   const [userPhone, setUserPhone] = useState(""); // เพิ่ม state สำหรับเบอร์โทรผู้ใช้

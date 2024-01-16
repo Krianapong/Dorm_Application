@@ -1,31 +1,44 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
+import React from "react";
+import { Modal, Button } from "react-bootstrap";
 
-const MyComponent = () => {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-
-  const openModal = () => {
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setModalIsOpen(false);
-  };
-
+const PaymentModal = ({
+  show,
+  onHide,
+  selectedServices,
+  totalAmount,
+  userName,
+  userPhone,
+  roomNumber,
+}) => {
   return (
-    <div>
-      <button onClick={openModal}>Open Modal</button>
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Example Modal"
-      >
-        <h2>Hello Modal</h2>
-        <button onClick={closeModal}>Close Modal</button>
-      </Modal>
-    </div>
+    <Modal show={show} onHide={onHide}>
+      <Modal.Header closeButton>
+        <Modal.Title>รายละเอียดการบริการ</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div>
+          <p>รายการบริการที่เลือก:</p>
+          <ul>
+            {Object.entries(selectedServices).map(([service, selected]) => (
+              selected && <li key={service}>{service}</li>
+            ))}
+          </ul>
+        </div>
+        <p>ยอดรวม: {totalAmount} บาท</p>
+        <p>ชื่อผู้ใช้: {userName}</p>
+        <p>เบอร์โทร: {userPhone}</p>
+        <p>หมายเลขห้อง: {roomNumber}</p>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="primary" onClick={onHide}>
+          ยืนยัน
+        </Button>
+        <Button variant="secondary" onClick={onHide}>
+          ยกเลิก
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 
-export default MyComponent;
+export default PaymentModal;
