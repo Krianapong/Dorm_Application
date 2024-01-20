@@ -1,174 +1,108 @@
 import { useState, useEffect } from "react";
-import ServiceDetails from "../ServiceDetails";
-import ReactModal from 'react-modal';
-import firebase from "firebase/compat/app";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "../Global.css";
-// import Heading from "../../common/Heading";
-import PaymentModal from "../PaymentModal";
+import Heading from "../../common/Heading";
+import ReactModal from "react-modal";
+import { auth, firestore } from "../../../firebase";
 
 const Repairt = () => {
-  const userUID = firebase.auth().currentUser.uid;
-  const db = firebase.firestore();
-  const profilesRef = db.collection("profiles");
-  const roomsRef = db.collection("rooms");
+  const cleaningServices = [
+    { name: "บริการทำความสะอาดห้อง", price: 150 },
+    { name: "บริการซักผ้า", price: 80 },
+    { name: "บริการอบผ้า", price: 80 },
+    { name: "บริการล้างจาน", price: 100 },
+  ];
 
-  const [selectedServices, setSelectedServices] = useState({
-    Repair: false,
-    cleanAir: false,
-    Flush: false,
-    Order: false,
-  });
-
-  const [cleanAirPrice, setCleanAirPrice] = useState(0);
-
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedServices, setSelectedServices] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
-
-  const [confirmation, setConfirmation] = useState(false);
-  const [userName, setUserName] = useState("");
-  const [userPhone, setUserPhone] = useState("");
-  const [roomNumber, setRoomNumber] = useState("");
-
-  const [hasMultipleRooms, setHasMultipleRooms] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState("");
-
-  const [userRooms, setUserRooms] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+  const [rooms, setRooms] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [bookedRooms, setBookedRooms] = useState([]);
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const profileDoc = await profilesRef.doc(userUID).get();
-        const profileData = profileDoc.data();
-        if (profileData) {
-          setUserName(profileData.name);
-          setUserPhone(profileData.phone);
-        }
-      } catch (error) {
-        console.error("เกิดข้อผิดพลาดในการดึงข้อมูลโปรไฟล์: ", error);
-      }
+    const unsubscribeBookings = firestore
+      .collection("bookings")
+      .onSnapshot((snapshot) => {
+        const bookedRoomsData = snapshot.docs.map((doc) => doc.data().room);
+        setBookedRooms(bookedRoomsData);
+      });
+
+    return () => {
+      unsubscribeBookings();
     };
+  }, []);
 
-    const fetchRoomData = async () => {
-      try {
-        const roomsSnapshot = await db.collection("rooms").get();
-        const roomNumbers = roomsSnapshot.docs.map((doc) => doc.data().numroom);
-        const roomNumbersString = roomNumbers.join(", ");
-        setRoomNumber(roomNumbersString);
+  useEffect(() => {
+    const userId = auth.currentUser?.uid; // เพิ่ม ? เพื่อตรวจสอบว่า currentUser ไม่เป็น null
 
-        if (roomNumbers.length > 1) {
-          setHasMultipleRooms(true);
-        }
-      } catch (error) {
-        console.error("เกิดข้อผิดพลาดในการดึงข้อมูลห้อง: ", error);
-      }
-    };
+    if (userId) {
+      const unsubscribeProfile = firestore
+        .collection("profiles")
+        .doc(userId)
+        .onSnapshot((doc) => {
+          if (doc.exists) {
+            setUserProfile(doc.data());
+          } else {
+            console.log("No such document!");
+          }
+        });
 
-    const fetchUserRooms = async () => {
-      try {
-        const userRoomsSnapshot = await db
-          .collection("rooms")
-          .where("owner", "==", userUID)
-          .get();
-        const userRoomsData = userRoomsSnapshot.docs.map((doc) => doc.data());
-        setUserRooms(userRoomsData);
-      } catch (error) {
-        console.error("เกิดข้อผิดพลาดในการดึงข้อมูลห้องของผู้ใช้: ", error);
-      }
-    };
+      const unsubscribeRooms = firestore
+        .collection("rooms")
+        .where("owner", "==", userId)
+        .onSnapshot((snapshot) => {
+          const roomsData = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setRooms(roomsData);
+        });
 
-    fetchProfileData();
-    fetchRoomData();
-    fetchUserRooms();
-  }, [userUID, profilesRef, db]);
-
-  const handleCheckboxChange = (service) => {
-    setSelectedServices({
-      ...selectedServices,
-      [service]: !selectedServices[service],
-    });
-  };
-
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        const imageSrc = e.target.result;
-        setImageUrl(imageSrc);
+      return () => {
+        unsubscribeProfile();
+        unsubscribeRooms();
       };
-
-      reader.readAsDataURL(file);
     }
-  };
+  }, [auth.currentUser]);
 
-  const handlePayment = async () => {
-    const user = firebase.auth().currentUser;
+  const handleServiceSelection = (serviceName, price) => {
+    const isSelected = selectedServices.includes(serviceName);
 
-    if (!user) {
-      console.error("User not authenticated.");
-      return;
-    }
-
-    try {
-      const servicesRef = db
-        .collection("Services")
-        .doc("Repairt")
-        .collection(user.uid);
-
-      const serviceData = {
-        title: "Repairt",
-        selectedServices,
-        totalAmount: calculateTotalAmount(),
-        imageUrl: "",
-        name: userName,
-        phone: userPhone,
-        status: "ยังไม่เสร็จ",
-        numroom: hasMultipleRooms ? selectedRoom : roomNumber,
-      };
-
-      if (selectedFile) {
-        const storageRef = firebase.storage().ref();
-        const fileRef = storageRef.child(`images/${selectedFile.name}`);
-
-        await fileRef.put(selectedFile);
-        console.log("อัปโหลดรูปภาพเสร็จสิ้น");
-
-        const imageUrl = await fileRef.getDownloadURL();
-        setImageUrl(imageUrl);
-
-        serviceData.imageUrl = imageUrl;
-      }
-
-      await servicesRef.add(serviceData);
-
-      console.log("บริการถูกเพิ่มลงใน Firestore");
-      setConfirmation(true);
-    } catch (error) {
-      console.error("เกิดข้อผิดพลาด: ", error);
+    if (isSelected) {
+      setSelectedServices(
+        selectedServices.filter((service) => service !== serviceName)
+      );
+    } else {
+      setSelectedServices([...selectedServices, serviceName]);
     }
   };
 
   const calculateTotalAmount = () => {
-    return (
-      (selectedServices.Repair ? 20 : 0) +
-      (selectedServices.cleanAir ? 0 : 0) +
-      (selectedServices.Flush ? 0 : 0) +
-      (selectedServices.Order ? 0 : 0)
-    );
+    const totalAmount = selectedServices.reduce((acc, serviceName) => {
+      const selectedService = cleaningServices.find(
+        (service) => service.name === serviceName
+      );
+      return acc + (selectedService ? selectedService.price : 0);
+    }, 0);
+
+    return totalAmount;
   };
 
-  const totalAmount =
-    (selectedServices.Repair ? 20 : 0) +
-    (selectedServices.cleanAir ? 0 : 0) +
-    (selectedServices.Flush ? 0 : 0) +
-    (selectedServices.Order ? 0 : 0);
+  const handleImageUpload = (event) => {
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
-  const [showModal, setShowModal] = useState(false);
+    reader.onloadend = () => {
+      setImageUrl(reader.result);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   const handleOpenModal = () => {
     setShowModal(true);
@@ -178,11 +112,52 @@ const Repairt = () => {
     setShowModal(false);
   };
 
+  const handleRoomSelection = (room) => {
+    setSelectedRoom((prevSelectedRoom) =>
+      prevSelectedRoom && prevSelectedRoom.id === room.id ? null : room
+    );
+  };
+
+  const handlePayment = async () => {
+    try {
+      const userId = auth.currentUser.uid;
+
+      // Fetch user's profile data
+      const userDoc = await firestore.collection("profiles").doc(userId).get();
+      const userProfile = userDoc.data();
+
+      // Additional information to be added to the payment
+      const paymentInfo = {
+        firstName: userProfile.firstName,
+        lastName: userProfile.lastName,
+        phone: userProfile.phone,
+        selectedServices,
+        title: "RepairtService",
+        totalAmount: calculateTotalAmount(),
+        imageUrl,
+        status: "pending",
+        selectedRoom: selectedRoom ? selectedRoom.id : null,
+      };
+
+      // Save payment information in Firestore under /profiles/Housewife/uid
+      await firestore
+        .collection("Services")
+        .doc("Repiart")
+        .collection(userId)
+        .add(paymentInfo);
+
+      // Close the modal or perform any other necessary actions
+      handleCloseModal();
+    } catch (error) {
+      console.error("Error processing payment:", error.message);
+    }
+  };
+
   return (
     <>
-      <div className='container flex mtop'>
-        <div className='left row'>
-          <Heading title='Repairt' />
+      <div className="container flex mtop">
+        <div className="left row">
+          <Heading title="Repairt" />
           <div className="services-card">
             <div className="services-container">
               <div className="upload-container">
@@ -190,45 +165,18 @@ const Repairt = () => {
                   <div className="service-title">
                     <h2>หัวข้อการบริการ</h2>
                   </div>
-                  <label className="checkbox-label">
-                    <input
-                      className="checkbox-input"
-                      type="checkbox"
-                      checked={selectedServices.Repair}
-                      onChange={() => handleCheckboxChange("Repair")}
-                    />
-                    บริการจับสัตว์อันตราย (ราคา: 20 บาท)
-                  </label>
-                  <br />
-                  <label className="checkbox-label">
-                    <input
-                      className="checkbox-input"
-                      type="checkbox"
-                      checked={selectedServices.cleanAir}
-                      onChange={() => handleCheckboxChange("cleanAir")}
-                    />
-                    บริการรักษาสิ่งแวดล้อมบริเวณหอ (ฟรี)
-                  </label>
-                  <br />
-                  <label className="checkbox-label">
-                    <input
-                      className="checkbox-input"
-                      type="checkbox"
-                      checked={selectedServices.Flush}
-                      onChange={() => handleCheckboxChange("Flush")}
-                    />
-                    ล้างซิงค์ห้องน้ำ (ฟรี)
-                  </label>
-                  <br />
-                  <label className="checkbox-label">
-                    <input
-                      className="checkbox-input"
-                      type="checkbox"
-                      checked={selectedServices.Order}
-                      onChange={() => handleCheckboxChange("Order")}
-                    />
-                    อื่นๆ
-                  </label>
+                  {cleaningServices.map((service, index) => (
+                    <label key={index} className="checkbox-label">
+                      <input
+                        type="checkbox"
+                        className="checkbox-input"
+                        onChange={() =>
+                          handleServiceSelection(service.name, service.price)
+                        }
+                      />
+                      {`${service.name} (ราคา: ${service.price} บาท)`}
+                    </label>
+                  ))}
                   <div className="upload-section">
                     <div className="upload-title">
                       <h2>อัปโหลดรูปภาพ</h2>
@@ -236,8 +184,8 @@ const Repairt = () => {
                     <input
                       type="file"
                       accept="image/*"
-                      onChange={handleFileChange}
                       className="file-input"
+                      onChange={handleImageUpload}
                     />
                     <img
                       className="uploaded-image"
@@ -250,18 +198,37 @@ const Repairt = () => {
                   <div className="service-title">
                     <h2>หัวข้อที่รับบริการ</h2>
                   </div>
-                  <p className="service-details"><ServiceDetails selectedServices={selectedServices} /></p>
-                  <p className="total-amount">ยอดรวม: {totalAmount} บาท</p>
+                  <p className="service-details">
+                    {selectedServices.length > 0
+                      ? selectedServices.map((service, index) => (
+                          <span key={index}>
+                            {service} (ราคา:{" "}
+                            {
+                              cleaningServices.find(
+                                (cleaningService) =>
+                                  cleaningService.name === service
+                              )?.price
+                            }{" "}
+                            บาท)
+                            {index < selectedServices.length - 1 && <br />}
+                          </span>
+                        ))
+                      : "ยังไม่มีบริการที่เลือก"}
+                  </p>
+                  <p className="total-amount">
+                    ยอดรวม: {calculateTotalAmount()} บาท
+                  </p>
                 </section>
                 <section className="section3">
                   <div className="service-title">
                     <h2>รายเอียดการบริการ</h2>
                   </div>
                   <p className="service-details">
-                    เวลาให้บริการ : 08.00 - 20.00 น.
+                    เวลาให้บริการ: 08.00 - 20.00 น.
                   </p>
                   <p className="service-details">
-                    **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์ และวันหยุดนักขัตฤกษ **
+                    **ไม่พร้อมให้บริการในวันหยุด เสาร์ อาทิตย์
+                    และวันหยุดนักขัตฤกษ**
                   </p>
                 </section>
               </div>
@@ -270,46 +237,68 @@ const Repairt = () => {
               </button>
             </div>
           </div>
-          <ReactModal
-            isOpen={showModal}
-            onRequestClose={handleCloseModal}
-            contentLabel="Example Modal"
-            className="custom-modal" // Add your custom class
-          >
-            <div>
-              <h1 className="custom-modal-title">รายละเอียดการบริการ</h1>
-              <div className="custom-modal-body">
-                <ServiceDetails selectedServices={selectedServices} />
-                <p>ยอดรวม: {totalAmount} บาท</p>
-                {hasMultipleRooms && (
-                  <div>
-                    <label htmlFor="roomSelect">เลือกห้อง:</label>
-                    <select
-                      id="roomSelect"
-                      onChange={(e) => setSelectedRoom(e.target.value)}
-                      value={selectedRoom}
-                    >
-                      {userRooms.map((room) => (
-                        <option key={room.numroom} value={room.numroom}>
-                          Room {room.numroom}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                )}
-              </div>
-              <div className="custom-modal-footer">
-                <button className="custom-modal-buttons-a" onClick={handlePayment}>
-                  ยืนยัน
-                </button>
-                <button className="custom-modal-buttons-c" onClick={handleCloseModal}>
-                  ยกเลิก
-                </button>
-              </div>
-            </div>
-          </ReactModal>
         </div>
       </div>
+      <ReactModal
+        isOpen={showModal}
+        onRequestClose={handleCloseModal}
+        contentLabel="Example Modal"
+        className="custom-modal"
+      >
+        <div>
+          <h1 className="custom-modal-title">รายละเอียดการบริการ</h1>
+          <section className="section4">
+            <div className="service-title">
+              <h2>เลือกห้อง</h2>
+            </div>
+            <div className="rooms-container">
+              {rooms.map((room) => (
+                <button
+                  key={room.id}
+                  onClick={() => handleRoomSelection(room)}
+                  className={`room-button ${
+                    selectedRoom && selectedRoom.id === room.id
+                      ? "selected"
+                      : ""
+                  }`}
+                >
+                  Room {room.id}
+                </button>
+              ))}
+            </div>
+          </section>
+          <div className="custom-modal-body">
+            <p className="service-details">
+              {selectedServices.length > 0
+                ? selectedServices.map((service, index) => (
+                    <span key={index}>
+                      {service} (ราคา:{" "}
+                      {
+                        cleaningServices.find(
+                          (cleaningService) => cleaningService.name === service
+                        )?.price
+                      }{" "}
+                      บาท)
+                      {index < selectedServices.length - 1 && <br />}
+                    </span>
+                  ))
+                : "ยังไม่มีบริการที่เลือก"}
+            </p>
+            <p className="total-amount">ยอดรวม: {calculateTotalAmount()} บาท</p>
+          </div>
+          <div className="custom-modal-footer">
+            <button className="custom-modal-buttons-a" onClick={handlePayment}>
+              ยืนยัน
+            </button>
+            <button
+              className="custom-modal-buttons-c"
+              onClick={handleCloseModal}
+            >
+              ยกเลิก
+            </button>
+          </div>
+        </div>
+      </ReactModal>
     </>
   );
 };

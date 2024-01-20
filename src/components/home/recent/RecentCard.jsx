@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import { useState, useEffect } from "react"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
 import { firestore } from "../../../firebase";
@@ -26,14 +26,15 @@ const RecentCard = () => {
 
             const docRef = await firestore.collection('typerooms').doc(type).get();
             if (docRef.exists) {
-              const imageUrl = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${docRef.data().img}?alt=media`
+              // const imgPath = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${docRef.data().img}?alt=media`
+              const imgPath = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${docRef.data().img}?alt=media`
               const data = {
                 roomNumber: id,
                 roomType: docRef.data().name,
                 roomStatus: status,
                 roomPrice: docRef.data().price,
                 roomLocation: docRef.data().location,
-                roomImg: imageUrl,
+                roomImg: imgPath,
               }
               //console.log(data);
               InfoRoom.push(data);
@@ -76,7 +77,7 @@ const RecentCard = () => {
             return (
               <div className='box shadow' key={data.roomNumber}>
                 <div className='img'>
-                  <img src={data.roomImg} alt='' />
+                  <img src={data.imgPath} alt='' />
                 </div>
                 <div className='text'>
                   <div className='category flex'>
@@ -97,7 +98,7 @@ const RecentCard = () => {
                       roomStatus: data.roomStatus,
                       roomPrice: data.roomPrice,
                       roomType: data.roomType,
-                      roomImg: data.roomImg
+                      roomImg: data.imgPath
                     }}>
                       <button className="btn2">{data.roomPrice}</button>
                     </Link> <label htmlFor=''>/month</label>

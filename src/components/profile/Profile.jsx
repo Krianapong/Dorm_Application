@@ -77,7 +77,7 @@ const Profile = () => {
     try {
       // Upload avatar if a new file is selected
       if (formData.avatarFile) {
-        const avatarRef = storage.ref().child(`profile_user/${userId}`);
+        const avatarRef = storage.ref().child(`profiles_image/${userId}`);
         await avatarRef.put(formData.avatarFile);
         const avatarURL = await avatarRef.getDownloadURL();
 

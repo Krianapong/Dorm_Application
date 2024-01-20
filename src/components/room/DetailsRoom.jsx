@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import './RoomDetail.css';
 import ReactModal from 'react-modal';
