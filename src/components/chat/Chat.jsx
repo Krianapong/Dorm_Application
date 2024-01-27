@@ -41,7 +41,6 @@ class Chat extends Component {
               <input
                 type="text"
                 placeholder="Type a message here"
-               
               />
               <button className="btnSendMsg">
                 <i className="fa fa-paper-plane"></i>

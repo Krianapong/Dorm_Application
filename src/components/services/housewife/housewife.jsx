@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "firebase/compat/firestore";
 import "firebase/compat/storage";
 import "../Global.css";
 import Heading from "../../common/Heading";
 import ReactModal from "react-modal";
-import { auth, firestore } from "../../../firebase";
-
+import { auth, firestore, storage } from "../../../firebase";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 const Housewife = () => {
   const cleaningServices = [
     { name: "บริการทำความสะอาดห้อง", price: 150 },
@@ -21,6 +23,8 @@ const Housewife = () => {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [bookedRooms, setBookedRooms] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
   useEffect(() => {
     const unsubscribeBookings = firestore
@@ -36,7 +40,7 @@ const Housewife = () => {
   }, []);
 
   useEffect(() => {
-    const userId = auth.currentUser?.uid; // เพิ่ม ? เพื่อตรวจสอบว่า currentUser ไม่เป็น null
+    const userId = auth.currentUser?.uid;
 
     if (userId) {
       const unsubscribeProfile = firestore
@@ -77,6 +81,9 @@ const Housewife = () => {
       );
     } else {
       setSelectedServices([...selectedServices, serviceName]);
+      // ให้แสดง Alert MUI เมื่อเลือกบริการ
+      setAlertMessage(`คุณเลือกบริการ: ${serviceName}`);
+      setShowAlert(true);
     }
   };
 
@@ -112,10 +119,8 @@ const Housewife = () => {
     setShowModal(false);
   };
 
-  const handleRoomSelection = (room) => {
-    setSelectedRoom((prevSelectedRoom) =>
-      prevSelectedRoom && prevSelectedRoom.id === room.id ? null : room
-    );
+  const handleRoomSelection = (event) => {
+    setSelectedRoom(event.target.value);
   };
 
   const handlePayment = async () => {
@@ -125,6 +130,8 @@ const Housewife = () => {
       // Fetch user's profile data
       const userDoc = await firestore.collection("profiles").doc(userId).get();
       const userProfile = userDoc.data();
+      const imageRef = storage.ref(`Services/Housewife/${userId}/image.jpg`);
+      await imageRef.putString(imageUrl, 'data_url');
 
       // Additional information to be added to the payment
       const paymentInfo = {
@@ -134,7 +141,7 @@ const Housewife = () => {
         selectedServices,
         title: "cleaningService",
         totalAmount: calculateTotalAmount(),
-        imageUrl,
+        imageUrl: `Services/Housewife/${userId}/image.jpg`, // Updated image URL
         status: "pending",
         selectedRoom: selectedRoom ? selectedRoom.id : null,
       };
@@ -252,19 +259,23 @@ const Housewife = () => {
               <h2>เลือกห้อง</h2>
             </div>
             <div className="rooms-container">
-              {rooms.map((room) => (
-                <button
-                  key={room.id}
-                  onClick={() => handleRoomSelection(room)}
-                  className={`room-button ${
-                    selectedRoom && selectedRoom.id === room.id
-                      ? "selected"
-                      : ""
-                  }`}
+              <FormControl fullWidth>
+                <Select
+                  value={selectedRoom}
+                  onChange={handleRoomSelection}
+                  displayEmpty
+                  inputProps={{ "aria-label": "Select Room" }}
                 >
-                  Room {room.id}
-                </button>
-              ))}
+                  <MenuItem value="" disabled>
+                    เลือกห้อง
+                  </MenuItem>
+                  {rooms.map((room) => (
+                    <MenuItem key={room.id} value={room}>
+                      Room {room.id}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </div>
           </section>
           <div className="custom-modal-body">

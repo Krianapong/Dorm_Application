@@ -1,40 +1,7 @@
 import * as React from 'react';
 import { LineChart } from '@mui/x-charts/LineChart';
+
 const years = [2021, 2022, 2023];
-
-const uData = [
-  [10000, 10000, 12000, 12780, 10890, 10390, 10490, 10000, 10000, 10000, 10708, 10089],
-  [10500, 10200, 12200, 12980, 10990, 10490, 10590, 10100, 10100, 10100, 10808, 10099],
-  [10000, 10500, 12500, 13180, 10090, 10590, 10690, 10200, 10200, 10300, 10908, 10009],
-];
-
-const pData = [
-  [100, 198, 98, 298, 248, 180, 143, 100, 198, 98, 298, 248],
-  [120, 210, 110, 320, 270, 200, 163, 120, 218, 118, 318, 268],
-  [150, 240, 140, 350, 300, 230, 193, 150, 248, 148, 348, 298],
-];
-
-const uDataUnitPrice = 3.75 / 150; 
-const pDataUnitPrice = 3.25;
-
-const calculateCosts = (data, unitPrice) => {
-  return data.map((values) => values.map((value) => value * unitPrice));
-};
-
-const xLabels = [
-  'มกราคม',
-  'กุมภาพันธ์',
-  'มีนาคม',
-  'เมษายน',
-  'พฤษภาคม',
-  'มิถุนายน',
-  'กรกฎาคม',
-  'สิงหาคม',
-  'กันยายน',
-  'ตุลาคม',
-  'พฤศจิกายน',
-  'ธันวาคม',
-];
 
 const chartContainerStyle = {
   margin: '20px',
@@ -43,28 +10,62 @@ const chartContainerStyle = {
 
 const dropdownContainerStyle = {
   marginBottom: '20px',
-  alignSelf: 'flex-end', 
+  alignSelf: 'flex-end',
 };
 
 export default function SimpleLineChart() {
   const [selectedYear, setSelectedYear] = React.useState(years[0]);
-
-  const uCosts = calculateCosts(uData, uDataUnitPrice);
-  const pCosts = calculateCosts(pData, pDataUnitPrice);
+  const [electricityData, setElectricityData] = React.useState([]);
+  const [waterData, setWaterData] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
 
   const handleYearChange = (event) => {
     setSelectedYear(parseInt(event.target.value, 10));
   };
 
+  const fetchData = async (url, setData, dataType) => {
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+
+      // Filter data based on the correct field for each type
+      let filteredData;
+      if (dataType === 'electricity') {
+        filteredData = result.feeds.filter(feed => !isNaN(parseFloat(feed.field5)));
+      } else if (dataType === 'water') {
+        filteredData = result.feeds.filter(feed => !isNaN(parseFloat(feed.field1)));
+      }
+
+      setData(filteredData);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      // Handle errors
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  React.useEffect(() => {
+    fetchData('https://api.thingspeak.com/channels/429105/fields/5.json?', setElectricityData, 'electricity');
+  }, []);
+
+  React.useEffect(() => {
+    fetchData('https://api.thingspeak.com/channels/624218/fields/1.json?', setWaterData, 'water');
+  }, []);
+
+  // แปลงค่าไฟจาก Volt และ Watt เป็น Ampere
+  const electricityValues = electricityData.map((feed) => parseFloat(feed.field5)) || [];
+  const voltage = 220; // แรงดันไฟฟ้า (Volt)
+  const electricityCurrentValues = electricityValues.map((power) => (power / voltage)*7) || [];
+
+  // แปลงค่าน้ำจากลิตรเป็นคิวบิกเมตร
+  const waterValues = waterData.map((feed) => parseFloat(feed.field1) * 0.001) || [];
+
   return (
     <div style={chartContainerStyle}>
-      <div classNamestyle={dropdownContainerStyle}>
+      <div style={dropdownContainerStyle}>
         <label htmlFor="yearDropdown">Select Year: </label>
-        <select
-          id="yearDropdown"
-          value={selectedYear}
-          onChange={handleYearChange}
-        >
+        <select id="yearDropdown" value={selectedYear} onChange={handleYearChange}>
           {years.map((year) => (
             <option key={year} value={year}>
               {year}
@@ -72,21 +73,28 @@ export default function SimpleLineChart() {
           ))}
         </select>
       </div>
-      <LineChart
-        width={1400}
-        height={600}
-        series={[
-          {
-            data: pCosts[years.indexOf(selectedYear)],
-            label: `ค่าไฟฟ้า (฿บาท) - ${selectedYear}`,
-          },
-          {
-            data: uCosts[years.indexOf(selectedYear)],
-            label: `ค่าน้ำ (฿บาท) - ${selectedYear}`,
-          },
-        ]}
-        xAxis={[{ scaleType: 'point', data: xLabels }]}
-      />
+      {loading ? (
+        <p>Loading...</p>
+      ) : (
+        <LineChart
+          width={1400}
+          height={600}
+          series={[
+            {
+              data: electricityCurrentValues,
+              label: `$ค่าไฟ (฿บาท) - ${selectedYear}`,
+              key: 'electricityCurrent',
+            },
+
+            {
+              data: waterValues,
+              label: `$ค่าน้ำ (คิวบิกเมตร) - ${selectedYear}`,
+              key: 'water',
+            },
+          ]}
+          xAxis={[{ scaleType: 'point', data: electricityValues.map((_, index) => index + 1) }]}
+        />
+      )}
     </div>
   );
 }
