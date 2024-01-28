@@ -61,8 +61,12 @@ export default function SimpleLineChart() {
   // แปลงค่าน้ำจากลิตรเป็นคิวบิกเมตร
   const waterValues = waterData.map((feed) => parseFloat(feed.field1) * 0.001) || [];
 
-  // สร้างข้อมูลแกน x ตามจำนวนข้อมูลในแกน y
-  const xAxisData = electricityValues.map((_, index) => index + 1);
+  // สร้างข้อมูลแกน x ตาม created_at ของข้อมูล
+  const xAxisData = electricityData.map((feed) => {
+    const utcTime = new Date(feed.created_at);
+    const thaiTime = utcTime.toLocaleTimeString('en-TH', { timeZone: 'Asia/Bangkok' });
+    return thaiTime;
+  });
 
   return (
     <div style={chartContainerStyle}>
@@ -88,14 +92,13 @@ export default function SimpleLineChart() {
               label: `$ค่าไฟ (฿บาท) - ${selectedYear}`,
               key: 'electricityCurrent',
             },
-
             {
               data: waterValues,
-              label: `$ค่าน้ำ (คิวบิกเมตร) - ${selectedYear}`,
+              label: `$ค่าน้ำ (฿บาท) - ${selectedYear}`,
               key: 'water',
             },
           ]}
-          xAxis={[{ scaleType: 'point', data: xAxisData }]} // กำหนดข้อมูลแกน x ให้เป็น xAxisData
+          xAxis={[{ scaleType: 'point', data: xAxisData }]}
         />
       )}
     </div>

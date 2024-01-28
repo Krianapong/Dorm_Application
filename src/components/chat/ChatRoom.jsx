@@ -13,13 +13,18 @@ class ChatRoom extends Component {
         this.state = {
             chat: [],
             text: '',
+            userData: null,
         };
 
         const currentUserID = auth.currentUser?.uid;
         this.messagesRef = ref(database, `/${currentUserID}`);
     }
 
-    componentDidMount() {
+    toggleInfo = (e) => {
+        e.target.parentNode.classList.toggle("open");
+    };
+
+    async componentDidMount() {
         onValue(this.messagesRef, (snapshot) => {
             const messages = snapshot.val();
             if (messages) {
@@ -27,26 +32,23 @@ class ChatRoom extends Component {
                 this.scrollToBottom();
             }
         });
+
+        const userData = await this.getUserData();
+        this.setState({ userData });
     }
 
     componentWillUnmount() {
         off(this.messagesRef);
     }
 
-    scrollToBottom() {
-        this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    getUserData() {
-        // Retrieve user data from Cloud Firestore based on the logged-in user
-        const userId = auth.currentUser.uid; // Assuming you're using Firebase Authentication
+    async getUserData() {
+        const userId = auth.currentUser.uid;
         const userRef = firestore.collection("profiles").doc(userId);
 
         return userRef.get().then(async (doc) => {
             if (doc.exists) {
                 const userData = doc.data();
 
-                // Fetch avatar URL
                 const avatarRef = storage.ref().child(`profiles_image/${userId}`);
                 const avatarURL = await avatarRef.getDownloadURL();
 
@@ -62,10 +64,8 @@ class ChatRoom extends Component {
             }
         });
     }
-    formatTimestamp(timestamp) {
-        const date = new Date(timestamp);
-        const options = { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
-        return date.toLocaleString('en-US', options);
+    scrollToBottom() {
+        this.messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
 
     sendMessage = async () => {
@@ -85,9 +85,38 @@ class ChatRoom extends Component {
         }
     };
 
+    formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+        return date.toLocaleString('en-US', options);
+    }
+
+    renderUserProfile(userData) {
+        return (
+            <div className="main__userprofile">
+                <div className="profile__card user__profile__image">
+                    <div className="profile__image">
+                        <img src={userData.avatar} alt="User Avatar" />
+                    </div>
+                    <h4>{userData.name}</h4>
+                    <p>{userData.email}</p>
+                </div>
+                <div className="profile__card">
+                    <div className="card__header" onClick={this.toggleInfo}>
+                        <h4>Information</h4>
+                        <i className="fa fa-angle-down"></i>
+                    </div>
+                    <div className="card__content">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla
+                        ultrices urna a imperdiet egestas. Donec in magna quis ligula
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     render() {
-        const { chat, text } = this.state;
+        const { chat, text, userData } = this.state;
         const currentUserID = auth.currentUser?.uid;
 
         return (
@@ -127,25 +156,25 @@ class ChatRoom extends Component {
                     </Link>
                 </div>
                 <div className="main__chatcontent">
-                <div className="content__header">
-          <div className="blocks">
-            <div className="current-chatting-user">
-            <div className="avatar">
-                <div className="avatar">
-                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" alt="User Avatar" />
-                </div>
-              </div>
-              <p>Admin</p>
-            </div>
-          </div>
-          <div className="blocks">
-            <div className="settings">
-              <button className="btn-nobg">
-                <i className="fa fa-cog"></i>
-              </button>
-            </div>
-          </div>
-        </div>
+                    <div className="content__header">
+                        <div className="blocks">
+                            <div className="current-chatting-user">
+                                <div className="avatar">
+                                    <div className="avatar">
+                                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" alt="User Avatar" />
+                                    </div>
+                                </div>
+                                <p>Admin</p>
+                            </div>
+                        </div>
+                        <div className="blocks">
+                            <div className="settings">
+                                <button className="btn-nobg">
+                                    <i className="fa fa-cog"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                     <div className="content__body">
                         <div className="chat__items">
                             {chat.map((item) => (
@@ -156,7 +185,7 @@ class ChatRoom extends Component {
                                     <div className="chat__item__content">
                                         <div className="chat__msg">{item.text}</div>
                                         <div className="chat__meta">
-                                        <span>{this.formatTimestamp(item.createdAt)}</span>
+                                            <span>{this.formatTimestamp(item.createdAt)}</span>
                                         </div>
                                     </div>
                                     <div className="avatar">
@@ -183,24 +212,7 @@ class ChatRoom extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="main__userprofile">
-                    <div className="profile__card user__profile__image">
-                        <div className="profile__image">
-                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" alt="User Avatar" />
-                        </div>
-                        <h4>Fernando Faucho</h4>
-                        <p>CEO & Founder at Highly Inc</p>
-                    </div>
-                    <div className="profile__card">
-                        <div className="card__header" onClick={this.toggleInfo}>
-                            <h4>Information</h4>
-                            <i className="fa fa-angle-down"></i>
-                        </div>
-                        <div className="card__content">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla ultrices urna a imperdiet egestas. Donec in magna quis ligula
-                        </div>
-                    </div>
-                </div>
+                {userData && this.renderUserProfile(userData)}
             </div>
         );
     }

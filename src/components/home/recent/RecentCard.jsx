@@ -16,18 +16,16 @@ const RecentCard = () => {
         const querySnapshot = await collRef.get();
         const InfoRoom = [];
         setLoading(true);
-
-
+      
         await Promise.all(
           querySnapshot.docs.map(async (docs) => {
             const id = docs.id;
             const type = docs.data().type;
             const status = docs.data().status;
-
+      
             const docRef = await firestore.collection('typerooms').doc(type).get();
             if (docRef.exists) {
-              // const imgPath = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${docRef.data().img}?alt=media`
-              const imgPath = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${docRef.data().img}?alt=media`
+              const imgPath = `https://firebasestorage.googleapis.com/v0/b/hopak-8af20.appspot.com/o/types_image%2F${type}%2F${type}?alt=media&token=${docRef.data().token}`;
               const data = {
                 roomNumber: id,
                 roomType: docRef.data().name,
@@ -36,7 +34,7 @@ const RecentCard = () => {
                 roomLocation: docRef.data().location,
                 roomImg: imgPath,
               }
-              //console.log(data);
+      
               InfoRoom.push(data);
             } else {
               console.log('ไม่พบข้อมูลชนิดห้องพัก');
@@ -45,7 +43,8 @@ const RecentCard = () => {
         )
         setRoomInfo(InfoRoom);
         setLoading(false);
-      }
+      };
+      
       fetchData();
     } catch (error) {
       console.log('ดึงข้อมูลห้องพักผิดพลาด: ', error);
@@ -77,7 +76,7 @@ const RecentCard = () => {
             return (
               <div className='box shadow' key={data.roomNumber}>
                 <div className='img'>
-                  <img src={data.imgPath} alt='' />
+                  <img src={data.roomImg} alt='' />
                 </div>
                 <div className='text'>
                   <div className='category flex'>
@@ -98,10 +97,12 @@ const RecentCard = () => {
                       roomStatus: data.roomStatus,
                       roomPrice: data.roomPrice,
                       roomType: data.roomType,
-                      roomImg: data.imgPath
+                      roomImg: data.roomImg  // Corrected from data.imgPath
                     }}>
                       <button className="btn2">{data.roomPrice}</button>
-                    </Link> <label htmlFor=''>/month</label>
+                    </Link>
+
+
                   </div>
                   <span>{data.date}</span>
                 </div>
