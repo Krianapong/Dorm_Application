@@ -62,7 +62,11 @@ class ChatRoom extends Component {
             }
         });
     }
-
+    formatTimestamp(timestamp) {
+        const date = new Date(timestamp);
+        const options = { weekday: 'short', month: 'short', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+        return date.toLocaleString('en-US', options);
+    }
 
     sendMessage = async () => {
         const userData = await this.getUserData();
@@ -152,7 +156,7 @@ class ChatRoom extends Component {
                                     <div className="chat__item__content">
                                         <div className="chat__msg">{item.text}</div>
                                         <div className="chat__meta">
-                                            <span>{item.createdAt}</span>
+                                        <span>{this.formatTimestamp(item.createdAt)}</span>
                                         </div>
                                     </div>
                                     <div className="avatar">

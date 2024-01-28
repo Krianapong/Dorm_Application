@@ -3,7 +3,6 @@ import { getDatabase, onValue, off, push, ref, serverTimestamp } from 'firebase/
 import { auth, firestore, storage } from '../../firebase';
 import { Link } from "react-router-dom";
 import './chat.css';
-import { Margin } from '@mui/icons-material';
 
 const database = getDatabase();
 
@@ -43,15 +42,13 @@ class Chat extends Component {
   }
 
   async getUserData() {
-    // Retrieve user data from Cloud Firestore based on the logged-in user
-    const userId = auth.currentUser.uid; // Assuming you're using Firebase Authentication
+    const userId = auth.currentUser.uid;
     const userRef = firestore.collection("profiles").doc(userId);
 
     return userRef.get().then(async (doc) => {
       if (doc.exists) {
         const userData = doc.data();
 
-        // Fetch avatar URL
         const avatarRef = storage.ref().child(`profiles_image/${userId}`);
         const avatarURL = await avatarRef.getDownloadURL();
 
@@ -60,8 +57,6 @@ class Chat extends Component {
           avatar: avatarURL,
           email: userData.email,
           name: `${userData.firstName} ${userData.lastName}`,
-          bio: userData.bio || "", // Assuming there's a 'bio' field in the user's profile
-          position: userData.position || "", // Assuming there's a 'position' field in the user's profile
         };
       } else {
         console.log("No such document!");
@@ -89,6 +84,12 @@ class Chat extends Component {
       this.setState({ text: '' });
     }
   };
+
+  formatTimestamp(timestamp) {
+    const date = new Date(timestamp);
+    const options = { weekday: 'short', month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', timeZoneName: 'short' };
+    return date.toLocaleString('en-US', options);
+  }
 
   renderUserProfile(userData) {
     return (
@@ -135,8 +136,8 @@ class Chat extends Component {
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" alt="User Avatar" />
               </div>
               <div className="userMeta">
-                <p>Dorm</p>
-                <span className="activeTime">เเชทภายในหอพัก</span>
+                <p>Admin</p>
+                <span className="activeTime">สอบถามรายละเอียดหอพัก</span>
               </div>
             </div>
           </Link>
@@ -148,8 +149,8 @@ class Chat extends Component {
                 </div>
               </div>
               <div className="userMeta">
-                <p>Admin</p>
-                <span className="activeTime">สอบถามรายละเอียดหอพัก</span>
+                <p>Dorm Group</p>
+                <span className="activeTime">เเชทภายในหอพัก</span>
               </div>
             </div>
           </Link>
@@ -163,7 +164,7 @@ class Chat extends Component {
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" alt="User Avatar" />
                   </div>
                 </div>
-                <p>Dorm</p>
+                <p>Admin</p>
               </div>
             </div>
             <div className="blocks">
@@ -184,7 +185,7 @@ class Chat extends Component {
                   <div className="chat__item__content">
                     <div className="chat__msg">{item.text}</div>
                     <div className="chat__meta">
-                      <span>{item.createdAt}</span>
+                      <span>{this.formatTimestamp(item.createdAt)}</span>
                     </div>
                   </div>
                   <div className="avatar">
