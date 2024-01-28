@@ -18,6 +18,7 @@ import DetailsRoom from "../components/room/DetailsRoom";
 import Cost from "../components/cost/CostCard";
 import Calendar from "../components/calendar/CalendarCard";
 import Chat from "../components/chat/Chat";
+import ChatRoom from "../components/chat/ChatRoom"
 // import Chat from "../components/chat/Chat";
 
 const Pages = () => {
@@ -43,6 +44,7 @@ const Pages = () => {
           <Route path="/cost" element={<Cost />} />
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/chatroom" element={<ChatRoom />} />
           
           {/* <Route path="/chat" element={<Chat /> }/>  */}
         </Routes>

@@ -56,10 +56,13 @@ export default function SimpleLineChart() {
   // แปลงค่าไฟจาก Volt และ Watt เป็น Ampere
   const electricityValues = electricityData.map((feed) => parseFloat(feed.field5)) || [];
   const voltage = 220; // แรงดันไฟฟ้า (Volt)
-  const electricityCurrentValues = electricityValues.map((power) => (power / voltage)*7) || [];
+  const electricityCurrentValues = electricityValues.map((power) => (power / voltage) * 7) || [];
 
   // แปลงค่าน้ำจากลิตรเป็นคิวบิกเมตร
   const waterValues = waterData.map((feed) => parseFloat(feed.field1) * 0.001) || [];
+
+  // สร้างข้อมูลแกน x ตามจำนวนข้อมูลในแกน y
+  const xAxisData = electricityValues.map((_, index) => index + 1);
 
   return (
     <div style={chartContainerStyle}>
@@ -92,7 +95,7 @@ export default function SimpleLineChart() {
               key: 'water',
             },
           ]}
-          xAxis={[{ scaleType: 'point', data: electricityValues.map((_, index) => index + 1) }]}
+          xAxis={[{ scaleType: 'point', data: xAxisData }]} // กำหนดข้อมูลแกน x ให้เป็น xAxisData
         />
       )}
     </div>
