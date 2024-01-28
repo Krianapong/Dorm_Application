@@ -164,7 +164,7 @@ class Chat extends Component {
                     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcTA78Na63ws7B7EAWYgTr9BxhX_Z8oLa1nvOA&usqp=CAU" alt="User Avatar" />
                   </div>
                 </div>
-                <p>Admin</p>
+                <p>Dorm Group</p>
               </div>
             </div>
             <div className="blocks">
