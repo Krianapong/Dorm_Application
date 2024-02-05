@@ -1,0 +1,128 @@
+.services-card {
+  display: flex;
+  justify-content: center;
+  margin: 50px 20px 50px 20px;
+  height: 100%;
+}
+
+.services-container {
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.upload-container {
+  display: flex;
+}
+
+.section1,
+.section3 {
+  flex: 1;
+  padding: 20px;
+}
+.section2 {
+  flex: 1;
+  padding: 20px;
+  width: 50vh;
+}
+
+.service-title {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.checkbox-label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.checkbox-input {
+  margin-right: 5px;
+}
+
+.upload-section {
+  margin-top: 20px;
+}
+
+.upload-title {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+}
+
+.file-input {
+  margin-top: 10px;
+}
+
+.uploaded-image {
+  width: 30vh;
+  height: 30vh;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.payment-button {
+  background-color: #2ecc71;
+  color: #fff;
+  padding: 15px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 20px 20px 20px 89%;
+  border-radius: 5px;
+}
+
+.payment-button:hover {
+  background-color: #27ae60;
+}
+
+.total-amount {
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+.service-details {
+  margin-top: 10px;
+}
+
+.custom-modal {
+  position: fixed;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  width: 800px;
+}
+
+.custom-modal-title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.custom-modal-body {
+  margin-bottom: 20px;
+}
+
+.custom-modal-footer {
+  display: flex;
+  gap: 20px;
+  justify-content: end;
+}
+
+.custom-modal-buttons-a  {
+  background-color: #27ae60;
+  margin-right: 10px;
+}
+.custom-modal-buttons-c  {
+  background-color: #cf1c1c;
+  margin-right: 10px;
+}

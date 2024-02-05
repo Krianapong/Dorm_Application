@@ -1,0 +1,31 @@
+/* Add this CSS to your BlogCard.css file */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pagination button {
+    padding: 8px 12px;
+    margin: 0 4px;
+    border: 1px solid #27ae60;
+    background-color: #27ae60;
+    cursor: pointer;
+  }
+  
+  .pagination button.active {
+    background-color: #27ae60;
+    color: #ffffff;
+    border: 1px solid #27ae60;
+  }
+  
+  .pagination button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+  .img-new {
+    width: 100%;
+    height: 300px;
+  }
+  
